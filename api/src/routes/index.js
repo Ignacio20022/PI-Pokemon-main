@@ -15,9 +15,8 @@ router.get('/', (req,res) => {
     res.send('hola')
 })
 
-router.use('/pokemon', pokemonRouter)
-
-// router.use('/type', typeRouter)
+router.use('/pokemons', pokemonRouter);
+router.use('/types', typeRouter);
 
 
 module.exports = router;

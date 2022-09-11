@@ -86,10 +86,10 @@ function getSinglePokemon(id, name) {
                     name
                 }
             })
-            //* Si no se encuentra en la db la promesa se resuelve con null
+            //* Si findAll no encuentra el nombre en la db la promesa se resuelve un array vacio
             .then((data) => {
                 // En caso de que no se haya encontrado en la db busca en la api
-                if(!data) {
+                if(!data.lenght) {
                     return(
                        axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
                         .then((details) => {
@@ -163,8 +163,25 @@ function* autoIncrementId () {
     }
 }
 
+//! funcion para guardar los tipos en la db
+async function saveTypes () {
+    return(
+        axios.get('https://pokeapi.co/api/v2/type/')
+        .then((types) => {
+            return(
+                types.data.results.map((type)=>{
+                    return {
+                        name: type.name
+                    }
+                })            
+            )   
+        })
+    )
+}
+
 module.exports = {
     getPokemons,
     getSinglePokemon,
-    autoIncrementId
+    autoIncrementId,
+    saveTypes
 }

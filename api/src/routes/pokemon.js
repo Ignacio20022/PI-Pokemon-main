@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Pokemon } = require('../db');
+const { Pokemon, Type } = require('../db');
 const {getPokemons, getSinglePokemon, autoIncrementId} = require('./utils');
 const router = Router();
 
@@ -13,7 +13,7 @@ router.get('/', async(req,res) => {
             const allPokes = await getPokemons()
             res.status(200).send(allPokes)
         } catch (error) {
-            console.log(error);
+            res.status(404).send(error)
         }
     }
     // En cambio si existe name el usuario busco por query
@@ -28,25 +28,45 @@ router.get('/', async(req,res) => {
     
 })
 
+router.post('/', async(req, res) => {
+    const {id, name} = req.body.pokemon
+    const {types} = req.body
+    
+    // if(!req.body.img) req.body.img = "https://i.ytimg.com/vi/_jHaJ2sRlmo/maxresdefault.jpg"
+    
+    try {    
+        if(id) throw ('No debes enviar una id')
+        if(!name) throw ('Debes agregar un nombre')
+        if(types[2]) throw ('Un pokemon no puede contener 3 tipos')
+        
+        req.body.pokemon.id = autoIncrementId().next().value    
+        
+        const poke = await Pokemon.create(req.body.pokemon)
+        if(poke) await poke.addTypes(types)
+
+        res.status(201).send(await Pokemon.findByPk(req.body.pokemon.id, {
+            include: [{
+                model: Type,
+                attributes: ['name'],
+                through: {
+                  attributes: []
+                }
+              }]
+        }))
+    } catch (error) {
+        res.status(400).send({error})
+    }
+})
+
 //! Creacion bulk de pokemons para tests manuales
 router.post('/bulkcreate', (req,res) => {
 
-    const {id, name} = req.body
-
-    // if(id) throw ('No debes enviar una id')
-
-    // if(!name) throw ('Debes agregar un nombre')
-    
-    // req.body.id = autoIncrementId().next().value
-    
     req.body.forEach(element => {
         element.id = autoIncrementId().next().value
         Pokemon.create(element)
     });
     return res.send('ok')
 })
-
-router.get('/')
 
 router.get('/:idPokemon', async(req,res) => {
     let {idPokemon} = req.params
