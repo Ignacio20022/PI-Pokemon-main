@@ -3,7 +3,7 @@ const {Pokemon, Type} = require('../db');
 
 
 // Retorna un arreglo de objetos con los datos de cada pokemon
-function getPokemons () {
+function getAllPokemons () {
     // Hace un llamado a la api
     // al resultado le hace un map donde llama otra vez a la api pero ahora a los detalles de cada pokemon
     // y por ultimo retorna un objeto con los datos necesarios de cada uno
@@ -35,7 +35,7 @@ function getPokemons () {
 }
 
 // Retorna un objeto con los datos de un pokemon segun su id
-function getSinglePokemon(id, name) {
+function getPokemonDetails(id, name) {
 
     // Si llega id y name no significa que el usuario quiere buscar por id
     if(id && !name){
@@ -154,8 +154,8 @@ function getSinglePokemon(id, name) {
 }
 
 // Funcion generadora para los id de los pokemons creados por el usuario
-// Empieza en 41 ya que solo se pueden mostrar 40 pokemons de la api
-let id = 41
+// Empieza en 20021 para diferenciarlos de los de la api
+let id = 20001
 function* autoIncrementId () {
 
     while(true){
@@ -164,7 +164,7 @@ function* autoIncrementId () {
 }
 
 //! funcion para guardar los tipos en la db
-async function saveTypes () {
+async function getTypes () {
     return(
         axios.get('https://pokeapi.co/api/v2/type/')
         .then((types) => {
@@ -180,8 +180,8 @@ async function saveTypes () {
 }
 
 module.exports = {
-    getPokemons,
-    getSinglePokemon,
+    getAllPokemons,
+    getPokemonDetails,
     autoIncrementId,
-    saveTypes
+    getTypes
 }
