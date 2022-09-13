@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { Pokemon, Type } = require('../db');
-const {getPokemons, getSinglePokemon, autoIncrementId} = require('./utils');
+const {getAllPokemons, getPokemonDetails, autoIncrementId} = require('./utils');
 const router = Router();
 
 // Retorna un arreglo de objetos con los datos de cada pokemon en la direccion '/pokemon'
@@ -10,7 +10,7 @@ router.get('/', async(req,res) => {
     // Si name = NULL entro solo a /pokemon
     if(!name){   
         try {
-            const allPokes = await getPokemons()
+            const allPokes = await getAllPokemons()
             res.status(200).send(allPokes)
         } catch (error) {
             res.status(404).send(error)
@@ -19,7 +19,7 @@ router.get('/', async(req,res) => {
     // En cambio si existe name el usuario busco por query
     else{
         try {
-            const poke = await getSinglePokemon(null, name)
+            const poke = await getPokemonDetails(null, name)
             res.status(200).send(poke)
         } catch (error) {
             res.status(404).json(error)
@@ -32,12 +32,11 @@ router.post('/', async(req, res) => {
     const {id, name} = req.body.pokemon
     const {types} = req.body
     
-    // if(!req.body.img) req.body.img = "https://i.ytimg.com/vi/_jHaJ2sRlmo/maxresdefault.jpg"
     
     try {    
         if(id) throw ('No debes enviar una id')
         if(!name) throw ('Debes agregar un nombre')
-        if(types[2]) throw ('Un pokemon no puede contener 3 tipos')
+        if(types[2]) throw ('Un pokemon no puede ser de 3 tipos')
         
         req.body.pokemon.id = autoIncrementId().next().value    
         
@@ -54,7 +53,9 @@ router.post('/', async(req, res) => {
               }]
         }))
     } catch (error) {
-        res.status(400).send({error})
+        if(error.parent) return res.status(400).json({error: error.parent.detail}) //En caso de que el tipo asignado no se encuentre
+
+        return res.status(400).send({error})
     }
 })
 
@@ -75,12 +76,33 @@ router.get('/:idPokemon', async(req,res) => {
     if(isNaN(idPokemon)) throw ('Debes ingresar un numero')
 
     try {
-        const poke = await getSinglePokemon(idPokemon, null)
-        res.status(200).send(poke)
+        const pokemon = await getPokemonDetails(idPokemon, null)
+        res.status(200).send(pokemon)
     } catch (error) {
         res.status(404).json(error)
     }
 })
+
+
+router.delete('/delete/:idPokemon', async(req,res) => {
+    let {idPokemon} = req.params
+    idPokemon = parseInt(idPokemon)
+
+    if(isNaN(idPokemon)) return res.status(404).send({error: 'ID de pokemon invalido'})
+
+    try {
+        await Pokemon.destroy({
+            where : { id: idPokemon }
+        })
+        .then((data) =>  {
+            if(data === 1) return res.status(200).send('Pokemon eliminado con exito')
+            else return res.status(400).send('El pokemon a eliminar no existe')
+        })
+    } catch (error) {
+        res.send({msg: 'Error inesperado', error})
+    }
+})
+
 
 
 module.exports = router;
