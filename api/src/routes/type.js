@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const { Type } = require('../db');
-const { saveTypes } = require('./utils');
+const { getTypes } = require('./utils');
 const router = Router();
 
 router.get('/', async(req,res) => {
-    const types = await saveTypes()
+    const types = await getTypes()
     console.log(types);
     types.map((type) => {
         Type.create(type)

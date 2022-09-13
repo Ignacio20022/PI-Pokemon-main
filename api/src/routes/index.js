@@ -10,11 +10,6 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.get('/', (req,res) => {
-    console.log('hola');
-    res.send('hola')
-})
-
 router.use('/pokemons', pokemonRouter);
 router.use('/types', typeRouter);
 
