@@ -15,6 +15,9 @@ module.exports = (sequelize) => {
     name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notIn: [[""]]
+        }
     },
     hp: {
         type: DataTypes.INTEGER
@@ -35,7 +38,8 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER
     },
     img : {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        defaultValue: "https://i.ytimg.com/vi/_jHaJ2sRlmo/maxresdefault.jpg"
     }
   });
 };
