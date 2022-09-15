@@ -1,0 +1,28 @@
+.box {
+        /* The image used */
+        background-image: url("https://images7.alphacoders.com/592/592678.jpg");
+      
+        /* Full height */
+        height: 100%;
+        width: 100%;
+      
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        display: flex;
+        justify-content:center;
+        align-items: center;    
+      
+}
+
+.box h1{
+    text-emphasis-color: blue;
+    color: red;
+    margin-top: -120%;
+}
+
+.box button{
+    color: aqua;
+}

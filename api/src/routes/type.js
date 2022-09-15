@@ -9,7 +9,7 @@ router.get('/', async(req,res) => {
     types.map((type) => {
         Type.create(type)
     })
-    res.send('type guardados')
+    res.send(types)
 })
 
 router.post('/createtype', (req,res) => {

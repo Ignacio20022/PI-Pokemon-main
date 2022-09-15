@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { Pokemon, Type } = require('../db');
-const {getAllPokemons, getPokemonDetails, autoIncrementId} = require('./utils');
+const {getAllPokemons, getPokemonDetails, autoIncrementalIdPokemons} = require('./utils');
 const router = Router();
 
 // Retorna un arreglo de objetos con los datos de cada pokemon en la direccion '/pokemon'
@@ -30,18 +30,22 @@ router.get('/', async(req,res) => {
 
 router.post('/', async(req, res) => {
     const {id, name} = req.body.pokemon
-    const {types} = req.body
+    const {type} = req.body
     
     
     try {    
         if(id) throw ('No debes enviar una id')
         if(!name) throw ('Debes agregar un nombre')
-        if(types[2]) throw ('Un pokemon no puede ser de 3 tipos')
+        if(type[2]) throw ('Un pokemon no puede ser de 3 tipos')
         
-        req.body.pokemon.id = autoIncrementId().next().value    
         
+        const existingTypes = await Type.count()
+        
+        if(existingTypes === 0) throw ('Se deben agregar tipos primero')
+        
+        req.body.pokemon.id = autoIncrementalIdPokemons().next().value    
         const poke = await Pokemon.create(req.body.pokemon)
-        if(poke) await poke.addTypes(types)
+        await poke.addTypes(type)
 
         res.status(201).send(await Pokemon.findByPk(req.body.pokemon.id, {
             include: [{
