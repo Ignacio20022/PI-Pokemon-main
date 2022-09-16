@@ -20,7 +20,7 @@ function App() {
             <Route exact path='/pokemons'>
                 <Home />
             </Route>
-            <Route exact path='/pokemons/:id'>                
+            <Route exact path='/pokemons/details/:id'>                
                 <PokemonDetails />
             </Route>
             {/* <Route exact path={`/pokemons?name=${name}`}>

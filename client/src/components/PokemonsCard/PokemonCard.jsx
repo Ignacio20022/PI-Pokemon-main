@@ -7,7 +7,7 @@ import * as actions from '../../redux/actions/index.js'
 export default function PokemonCard(props){
 
     return(
-        <Link to={`/pokemons/${props.id}`}>
+        <Link to={`/pokemons/details/${props.id}`}>
             <div className={style.box}>
                 <img src={props.img}/>
                 <p>Nombre {props.name}</p>
