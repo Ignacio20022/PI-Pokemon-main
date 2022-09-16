@@ -172,7 +172,7 @@ async function getPokemonByName(name){
     })
     // Si no se encuentra en la api tira error //TODO 404
     .catch((err) => {
-        throw ('No se enconto el pokemon')
+        throw new Error('No se enconto el pokemon')
     })     
 }
 
