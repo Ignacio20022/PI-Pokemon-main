@@ -22,6 +22,19 @@ server.use((req, res, next) => {
   next();
 });
 
+// app.use(express.static(path.join(__dirname, "./frontend/build")))
+
+// app.get(*
+//     function
+//     res . sendFi1e(
+//     path.join( dirname,
+//     function (err) {
+//     if (err) {
+//     res) {
+//     " . /frontend/build/index. html "
+//     res . status(56ô) . send(err);
+//     D;
+
 server.use('/', routes);
 
 // Error catching endware.

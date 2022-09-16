@@ -17,7 +17,7 @@ const {REACT_APP_BACKEND_URL} = process.env
 
 export const getAllPokemons = () => {
     return async function(dispatch){
-        await axios.get(`http://localhost:3001/pokemons`)
+        await axios.get(`/pokemons`)
         .then((pokemon) => {
             dispatch({
                 type: GET_ALL_POKEMONS, 
@@ -33,7 +33,7 @@ export const getAllPokemons = () => {
 
 export const getPokemonById = (id) => {
     return async function(dispatch){
-        await axios.get(`http://localhost:3001/pokemons/${id}`)
+        await axios.get(`/pokemons/details/${id}`)
         .then((pokemon) => {
             dispatch({
                 type: GET_POKEMON_BY_ID,
@@ -48,7 +48,7 @@ export const getPokemonById = (id) => {
 
 export const getPokemonByName = (name) => {
     return async function(dispatch){
-        await axios.get(`http://localhost:3001/pokemons?name=${name}`)
+        await axios.get(`/pokemons?name=${name}`)
         .then((pokemon) => {
             dispatch({
                 type: GET_POKEMON_BY_NAME,
@@ -63,7 +63,7 @@ export const getPokemonByName = (name) => {
 
 export const getTypes = () => {
     return async function(dispatch){
-        await axios.get(`http://localhost:3001/types`)
+        await axios.get(`/types`)
         .then((pokemonsType) => {
             dispatch({
                 type: GET_TYPES,
@@ -80,7 +80,7 @@ export const createPokemon = (data) => {
     return async function(){
         console.log('hola');
         console.log(data);
-        await axios.post(`http://localhost:3001/pokemons/create`,{data})
+        await axios.post(`/pokemons/create`,{data})
         .catch((error) => {
             console.log('chau');
             console.log(error);
@@ -95,7 +95,7 @@ export const clearDetail = () => {
 }
 // export const deletePokemon = (id) => {
 //     return async function(){
-//         await axios.delete(`http://localhost:3001/pokemons/delete/${id}`)
+//         await axios.delete(`/pokemons/delete/${id}`)
 //         .catch((error) => {
 //             console.log(error);
 //         })
