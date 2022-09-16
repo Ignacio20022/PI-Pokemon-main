@@ -4,14 +4,16 @@ import {
     GET_POKEMON_BY_NAME,
     GET_TYPES,
     CREATE_POKEMON,
-    DELETE_POKEMON
+    DELETE_POKEMON,
+    CLEAR_DETAILS
 } from "../actions";
 
 const initialState = {
     pokemons: [],
     pokemonDetails: {},
     filterPokemons:[],
-    types: []
+    types: [],
+    // error: [],
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -46,6 +48,16 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 pokemons: state.pokemons.filter((pokemon) => pokemon.id !== action.payload)
             }    
+        case CLEAR_DETAILS:
+            return{
+                ...state,
+                pokemonDetails: action.payload
+            }
+        // case ERROR:
+        //     return{
+        //         ...state,
+        //         error: action.payload
+        //     }
         default:
             return state
     }

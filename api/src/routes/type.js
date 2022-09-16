@@ -1,9 +1,12 @@
 const { Router } = require('express');
 const { Type } = require('../db');
-const { getTypes } = require('./utils');
+const { getTypes, incrementalIdTypes } = require('./utils');
 const router = Router();
 
 router.get('/', async(req,res) => {
+
+    // if()
+
     const types = await getTypes()
     console.log(types);
     types.map((type) => {
@@ -12,9 +15,9 @@ router.get('/', async(req,res) => {
     res.send(types)
 })
 
-router.post('/createtype', (req,res) => {
+router.post('/create', (req,res) => {
     req.body.forEach(element => {
-        // element.id = autoIncrementId().next().value
+        element.id = incrementalIdTypes()
         Type.create(element)
     });
     return res.send('ok')

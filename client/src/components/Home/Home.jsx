@@ -1,22 +1,26 @@
-import './home.css'
+import style from './home.module.css'
 import React, { Component } from "react";
 import PokemonCard from '../PokemonsCard/PokemonCard.jsx'
 import * as actions from '../../redux/actions/index.js'
 
 import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom';
 
 export class Home extends Component{
     componentDidMount(){
         this.props.getAllPokemons()
+        // if(!this.props.getAllPokemons()) return <Redirect to='/404' />
     }
 
     render() {
         return(
-            <div className='home'>
+            <div>
                 <h1>Pokemons</h1>
 
                 {this.props.pokemons?.map((pokemon) => {
                     return(
+                        <div className={style.home}>
+
                         <PokemonCard
                             key={pokemon.id}
                             id={pokemon.id}
@@ -24,6 +28,7 @@ export class Home extends Component{
                             types={pokemon.types}
                             img={pokemon.img}
                         />
+                        </div>
                     )
                 })}
             </div>

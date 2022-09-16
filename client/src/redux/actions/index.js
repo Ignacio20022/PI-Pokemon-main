@@ -1,5 +1,7 @@
+import assert from 'assert'
 import axios from 'axios'
 import dotenv from 'dotenv'
+import { Redirect } from 'react-router-dom'
 dotenv.config()
 
 
@@ -9,6 +11,7 @@ export const GET_POKEMON_BY_NAME = "GET_POKEMON_BY_NAME"
 export const GET_TYPES = "GET_TYPES"
 export const CREATE_POKEMON = "CREATE_POKEMON"
 export const DELETE_POKEMON = "DELETE_POKEMON"
+export const CLEAR_DETAILS = "CLEAR_DETAILS" 
 
 const {REACT_APP_BACKEND_URL} = process.env
 
@@ -16,7 +19,10 @@ export const getAllPokemons = () => {
     return async function(dispatch){
         await axios.get(`http://localhost:3001/pokemons`)
         .then((pokemon) => {
-            dispatch({type: GET_ALL_POKEMONS, payload: pokemon.data})
+            dispatch({
+                type: GET_ALL_POKEMONS, 
+                payload: pokemon.data
+            })
         })
         .catch((error) => { 
             console.log(error);
@@ -72,18 +78,26 @@ export const getTypes = () => {
 
 export const createPokemon = (data) => {
     return async function(){
-        await axios.post(`http://localhost:3001/pokemons`,{data})
+        console.log('hola');
+        console.log(data);
+        await axios.post(`http://localhost:3001/pokemons/create`,{data})
         .catch((error) => {
+            console.log('chau');
             console.log(error);
         })
     }
 }
-
-export const deletePokemon = (id) => {
-    return async function(){
-        await axios.delete(`http://localhost:3001/pokemons/delete/${id}`)
-        .catch((error) => {
-            console.log(error);
-        })
+export const clearDetail = () => {
+    return {
+        type: CLEAR_DETAILS,
+        payload: {}
     }
 }
+// export const deletePokemon = (id) => {
+//     return async function(){
+//         await axios.delete(`http://localhost:3001/pokemons/delete/${id}`)
+//         .catch((error) => {
+//             console.log(error);
+//         })
+//     }
+// }
