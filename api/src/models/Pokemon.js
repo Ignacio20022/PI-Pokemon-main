@@ -40,7 +40,10 @@ module.exports = (sequelize) => {
     },
     img : {
         type: DataTypes.STRING,
-        defaultValue: "https://i.ytimg.com/vi/_jHaJ2sRlmo/maxresdefault.jpg"
+        set(value){
+            if(value === '') this.setDataValue('img', "https://i.ytimg.com/vi/_jHaJ2sRlmo/maxresdefault.jpg")
+            else this.setDataValue('img', value)
+        }
     }
   });
 };
