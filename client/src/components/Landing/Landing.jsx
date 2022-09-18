@@ -15,7 +15,7 @@ export default function() {
     return(
         <div className={style.box}>
             <div>
-            <h1>APi pokemon</h1>
+            <h1>Pokemon API</h1>
             <Link to={"/pokemons"}>
                 <button onClick={loadTypes}>Ingresar</button>
 

@@ -28,57 +28,54 @@ router.get('/', async(req,res) => {
     
 })
 
-// function createPokemon(){
-
-    router.post('/create', async(req, res) => {
-        const {id, name} = req.body.data
-        const {types} = req.body.data
-        
-        try {    
-            if(id) throw new Error ('No debes enviar una id')
-            if(!name) throw new Error ('Debes agregar un nombre')
-            if(types.length > 2) throw new Error ('Solo se pueden elegir 2 tipos como maximo')
-            
-            
-            const existingTypes = await Type.count()
-            
-            if(existingTypes === 0) throw new Error ('Se deben agregar tipos primero')
-            
-            req.body.data.id = incrementalIdPokemons()  
-            let poke = await Pokemon.create(req.body.data)
-            await poke.addTypes(types)
-            
-            poke = await Pokemon.findByPk(req.body.data.id, {
-                include: [{
-                    model: Type,
-                    attributes: ['name'],
-                    through: {
-                        attributes: []
-                    }
-                }]
-            })
-            poke = {
-                ...poke.dataValues,
-                types: poke.types?.map((type)=> type.name)
-            }
-            
-            res.status(201).send(poke)
-        } catch (error) {
-            console.log(error);
-            if(error.parent) return res.status(400).json({error: error.parent.detail}) //En caso de que el tipo asignado no se encuentre
-            
-            return res.status(400).send({error})
-        }
-    })
-// }
+router.post('/create', async(req, res) => {
+    const {id, name} = req.body.data
+    const {types} = req.body.data
     
-    //! Creacion bulk de pokemons para tests manuales
-    router.post('/bulkcreate', (req,res) => {
+    try {    
+        if(id) throw new Error ('No debes enviar una id')
+        if(!name) throw new Error ('Debes agregar un nombre')
+        if(types.length > 2) throw new Error ('Solo se pueden elegir 2 tipos como maximo')
         
+        
+        const existingTypes = await Type.count()
+        
+        if(existingTypes === 0) throw new Error ('Se deben agregar tipos primero')
+        
+        req.body.data.id = incrementalIdPokemons()  
+        let poke = await Pokemon.create(req.body.data)
+        await poke.addTypes(types)
+        
+        poke = await Pokemon.findByPk(req.body.data.id, {
+            include: [{
+                model: Type,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                }
+            }]
+        })
+        poke = {
+            ...poke.dataValues,
+            types: poke.types?.map((type)=> type.name)
+        }
+        
+        res.status(201).send(poke)
+    } catch (error) {
+        console.log(error);
+        if(error.parent) return res.status(400).json({error: error.parent.detail}) //En caso de que el tipo asignado no se encuentre
+        
+        return res.status(400).send({error})
+    }
+})
+    
+//! Creacion bulk de pokemons para tests manuales
+router.post('/bulkcreate', (req,res) => {
+    
     req.body.forEach(element => {
         element.id = autoIncrementId().next().value
         Pokemon.create(element)
-    });
+    }); 
     return res.send('ok')
 })
 
@@ -121,7 +118,5 @@ router.delete('/delete/:idPokemon', async(req,res) => {
         res.send({msg: 'Error inesperado', error})
     }
 })
-
-
 
 module.exports = router;

@@ -7,15 +7,19 @@ import * as actions from '../../redux/actions/index.js'
 export default function PokemonCard(props){
 
     return(
-        <Link to={`/pokemons/details/${props.id}`}>
-            <div className={style.box}>
-                <img src={props.img}/>
-                <p>Nombre {props.name}</p>
-                <p>ID {props.id}</p>
-                <p>Tipos {props.types?.map((type) => type + " ")}</p>
-            </div>
+        <div className={style.box}>
+            <div className={style.select}>
 
-        </Link>
+            <Link to={`/pokemons/details/${props.id}`} className={style.link}>
+                <h1 className={style.nombre}>{props.name}</h1>
+                <div>
+                    <p>ID {props.id}</p>
+                    <h3 className={style.types}>{props.types?.map((type) => type + " ")}</h3>
+                    <img id={style.img} src={props.img}/>
+                </div>
+            </Link>
+            </div>
+        </div>
     )
 }
 

@@ -18,15 +18,18 @@ function App() {
                 <Landing />
             </Route>
             <Route exact path='/pokemons'>
+                <Navbar/>
                 <Home />
             </Route>
             <Route exact path='/pokemons/details/:id'>                
+                <Navbar/>
                 <PokemonDetails />
             </Route>
             {/* <Route exact path={`/pokemons?name=${name}`}>
                 <PokemonDetails />
             </Route> */}
             <Route exact path='/pokemons/create'>
+                <Navbar/>
                 <CreatePokemon />
             </Route>
             <Route path='*'>
