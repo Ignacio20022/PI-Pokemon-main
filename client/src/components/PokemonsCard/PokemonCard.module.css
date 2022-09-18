@@ -1,3 +1,53 @@
 .box{
-    border-color: red;
+    border: 2px solid black;
+    text-decoration: none;
+}
+
+.box:hover{
+    border: 2px solid red;
+}
+
+.nombre{
+    /* margin-left: 20px; */
+    text-decoration: none;
+}
+.link{
+    color:black;
+    text-decoration: none;
+}
+.link:hover{
+    color: red;
+    text-decoration: none;
+}
+
+#button{
+    color: black;
+    border: none;
+    position: absolute;
+    margin-left: 103.7px;
+    /* float: right; */
+    /* margin: 5px 5px 0 0; */
+    background-color: aqua;
+    /* border-radius: 50%; */
+    border-top-right-radius: 12px;
+    outline: none;
+}
+
+#button:hover{
+    background-color: red;
+    color: aqua;
+}
+
+.box{
+    width: 250px;
+    height: 450px;
+    /* background-color: aqua; */
+    border-radius: 12px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+#img{
+    width: 250px;
+    height: 250px;
 }

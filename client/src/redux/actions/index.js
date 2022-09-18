@@ -93,11 +93,11 @@ export const clearDetail = () => {
         payload: {}
     }
 }
-// export const deletePokemon = (id) => {
-//     return async function(){
-//         await axios.delete(`/pokemons/delete/${id}`)
-//         .catch((error) => {
-//             console.log(error);
-//         })
-//     }
-// }
+export const deletePokemon = (id) => {
+    return async function(){
+        await axios.delete(`/pokemons/delete/${id}`)
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+}

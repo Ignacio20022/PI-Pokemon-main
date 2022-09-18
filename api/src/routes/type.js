@@ -4,13 +4,15 @@ const { getTypes, incrementalIdTypes } = require('./utils');
 const router = Router();
 
 router.get('/', async(req,res) => {
-
-    // if()
-
+    
     const types = await getTypes()
     console.log(types);
     types.map((type) => {
-        Type.create(type)
+        Type.findOrCreate({
+            where:{
+                name: type.name
+            }
+        })
     })
     res.send(types)
 })

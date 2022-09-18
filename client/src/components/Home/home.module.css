@@ -1,3 +1,19 @@
-.home{
+/* .home{
     border: 2px solid red;
+} */
+.home{
+    /* display: grid;
+    grid-template-columns: repeat(3,1fr);
+    justify-items: center;
+    align-items: center; */
+    /* display: flex; */
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    row-gap: 200%;
+}
+
+#img{
+    height: 100px;
+    width: 100px;
 }

@@ -14,24 +14,23 @@ export class Home extends Component{
 
     render() {
         return(
-            <div>
+            <>
                 <h1>Pokemons</h1>
+                <div className={style.home}>
 
-                {this.props.pokemons?.map((pokemon) => {
-                    return(
-                        <div className={style.home}>
-
-                        <PokemonCard
-                            key={pokemon.id}
-                            id={pokemon.id}
-                            name={pokemon.name}
-                            types={pokemon.types}
-                            img={pokemon.img}
-                        />
-                        </div>
-                    )
-                })}
-            </div>
+                    {this.props.pokemons?.map((pokemon) => {
+                        return(
+                            <PokemonCard
+                                key={pokemon.id}
+                                id={pokemon.id}
+                                name={pokemon.name}
+                                types={pokemon.types}
+                                img={pokemon.img}
+                            />
+                        )
+                    })}
+                </div>
+            </>
         )
     }
 }
