@@ -34,6 +34,19 @@ async function getPokemonsAPI () {
     return pokemonsAPI
 }
 
+async function getAllPokemonsNames(){
+    let pokemonNamesDB = await Pokemon.findAll()
+    pokemonNamesDB = pokemonNamesDB.map((pokemon) => pokemon.name)
+
+    let pokemonsNamesAPI = 
+    await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=2000') 
+
+
+    pokemonsNamesAPI = pokemonsNamesAPI.data.results.map((elem) => elem.name)
+
+    return pokemonsNamesAPI.concat(pokemonNamesDB)
+}
+
 async function getPokemonDB(){
     let pokemonsDB = 
     await Pokemon.findAll({
@@ -207,6 +220,7 @@ async function getTypes () {
 
 module.exports = {
     getAllPokemons,
+    getAllPokemonsNames,
     getPokemonsAPI,
     getPokemonDB,
     getPokemonByID,

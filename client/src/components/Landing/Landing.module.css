@@ -40,4 +40,5 @@
 .box button:hover{
     -webkit-text-stroke: 0px white;
     background-color: black;
+    cursor: pointer;
 }

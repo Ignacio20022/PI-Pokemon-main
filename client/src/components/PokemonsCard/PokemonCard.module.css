@@ -8,6 +8,10 @@
     display: inline-block;
 }
 
+.box p{
+    text-align: center;
+}
+
 .box:hover{
     border: 2px solid red;
 }
@@ -43,9 +47,6 @@
     color: aqua;
 } */
 
-.box{
-
-}
 
 #img{
     width: 250px;

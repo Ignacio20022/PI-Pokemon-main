@@ -9,10 +9,9 @@ import NotFound from './components/NotFound/NotFound.jsx';
 import CreatePokemon from './components/CreatePokemon/CreatePokemon.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Filters from './components/Filters/Filters.jsx';
+import NavbarNoSearch from './components/Navbar/NavbarWitoutSearchBar.jsx';
 
 function App() {
-
-
 
     return (
         <div className="App">
@@ -21,25 +20,25 @@ function App() {
                 <Landing />
             </Route>
             <Route exact path='/pokemons'>
-                <Navbar/>
                 <Home />
             </Route>
             <Route exact path='/pokemons/details/:id'>                
-                <Navbar/>
+                <NavbarNoSearch/>
                 <PokemonDetails />
             </Route>
             {/* <Route exact path={`/pokemons?name=${name}`}>
                 <PokemonDetails />
             </Route> */}
             <Route exact path='/pokemons/create'>
-                <Navbar/>
+                <NavbarNoSearch/>
                 <CreatePokemon />
             </Route>
             <Route exact path='/pokemon/delete/:id'>
-                <Navbar/>
+                <NavbarNoSearch/>
                 
             </Route>
             <Route path='*'>
+                <NavbarNoSearch/>
                 <NotFound />
             </Route>
 

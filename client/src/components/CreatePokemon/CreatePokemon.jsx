@@ -3,17 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../redux/actions/index";
 
 import style from "./CreatePokemon.module.css";
-import validate from "./Validators";
+import { validateInputs } from "./Validators";
 
 export default function CreatePokemon() {
     const dispatch = useDispatch();
 
-    let types = useSelector((state) => state.types);
-    useEffect(() => {
-        if (!types.length) dispatch(actions.getTypes());
-    }, [dispatch, types.length]);
+    const types = useSelector((state) => state.types);
+    const pokemonsNames = useSelector((state) => state.pokemonsNames)
 
-    console.log(types);
+    useEffect(() => {
+        if(!types.length) dispatch(actions.getTypes());
+        if(!pokemonsNames.length) dispatch(actions.getAllNames())
+    }, [dispatch]);
 
     const [errors, setErrors] = useState({});
 
@@ -35,42 +36,76 @@ export default function CreatePokemon() {
         if (name === "types") {
             types[id].isChecked = checked;
             if (checked) {
-                setState({
-                    ...state,
-                    types: state.types.concat(value),
+                setState((oldData) => {
+                    const newData = { ...oldData, types: state.types.concat(value) };
+    
+                    setErrors(validateInputs(newData, pokemonsNames));
+    
+                    console.log(errors);
+    
+                    return newData;
                 });
+
+                // setState({
+                //     ...state,
+                //     types: state.types.concat(value),
+                // });
             } else if (!checked) {
-                setState({
-                    ...state,
-                    types: state.types.filter((i) => i !== value),
+                setState((oldData) => {
+                    const newData = { ...oldData, types : state.types.filter((i) => i !== value) };
+    
+                    setErrors(validateInputs(newData, pokemonsNames));
+    
+                    return newData;
                 });
+
+                // setState({
+                //     ...state,
+                //     types: state.types.filter((i) => i !== value),
+                // });
             }
-        } else {
+        } 
+        else {
             setState((oldData) => {
                 const newData = { ...oldData, [name]: value };
 
-                setErrors(validate(newData));
+                setErrors(validateInputs(newData, pokemonsNames));
 
-                console.log(errors);
-
-                // return newData
                 return newData;
             });
         }
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!Object.keys(errors).length) dispatch(actions.createPokemon(state));
-        else alert("no se puede");
+        // event.preventDefault();
+        // setErrors(validateName(state.name, pokemons))
+
+        if (!Object.keys(errors).length){
+            dispatch(actions.createPokemon(state));
+            // setState({
+            //     name: "",
+            //     hp: 0,
+            //     attk: 0,
+            //     def: 0,
+            //     speed: 0,
+            //     height: 0,
+            //     weight: 0,
+            //     img: "",
+            //     types: [],
+            // })
+            // types.map((type) => type.isChecked = false)    
+            alert ('Pokemon creado con exito')        
+        } 
+        else alert(`Please, check " ${Object.keys(errors)} " before submiting`);
     };
-    console.log(state);
 
     return (
         <div className={style.box}>
             <div className={style.form}>
-                <form onSubmit={handleSubmit}>
-                    <label>Nombre: </label>
+                <h4>Name and stats</h4> 
+                <form onSubmit={handleSubmit} autoComplete="off">
+                    <label>Name: </label> 
+                    <br></br>
                     <input
                         className={errors.name && "danger"}
                         type='text'
@@ -78,78 +113,101 @@ export default function CreatePokemon() {
                         value={state.name}
                         onChange={handleInputs}
                     />
-                    <p className='danger'>{errors.name}</p>
+                    <label className={style.errors}>{errors.name}</label>
+                    <br></br>
                     <br></br>
 
-                    <label>Vida: </label>
+                    <label>Health: </label>
+                    <br></br>
                     <input
                         type='number'
                         name='hp'
                         value={state.hp}
                         onChange={handleInputs}
                     />
+                    <label className={style.errors}>{errors.hp}</label>
+                    <br></br>
                     <br></br>
 
-                    <label>Ataque: </label>
+                    <label>Attack: </label>
+                    <br></br>
                     <input
                         type='number'
                         name='attk'
                         value={state.attk}
                         onChange={handleInputs}
                     />
+                    <label className={style.errors}>{errors.attk}</label>
+                    <br></br>
                     <br></br>
 
-                    <label>Defensa: </label>
+                    <label>Defense: </label>
+                    <br></br>
                     <input
                         type='number'
                         name='def'
                         value={state.def}
                         onChange={handleInputs}
                     />
+                    <label className={style.errors}>{errors.def}</label>
+                    <br></br>
                     <br></br>
 
-                    <label>Velocidad: </label>
+                    <label>Speed: </label>
+                    <br></br>
                     <input
                         type='number'
                         name='speed'
                         value={state.speed}
                         onChange={handleInputs}
                     />
+                    <label className={style.errors}>{errors.speed}</label>
+                    <br></br>
                     <br></br>
 
-                    <label>Altura: </label>
+                    <label>Height: </label>
+                    <br></br>
                     <input
                         type='number'
                         name='height'
                         value={state.height}
                         onChange={handleInputs}
                     />
+                    <label className={style.errors}>{errors.height}</label>
+                    <br></br>
                     <br></br>
 
-                    <label>Peso: </label>
+                    <label>weight: </label>
+                    <br></br>
                     <input
                         type='number'
                         name='weight'
                         value={state.weight}
                         onChange={handleInputs}
                     />
+                    <label className={style.errors}>{errors.weight}</label>
+                    <br></br>
                     <br></br>
 
-                    <label>Imagen: </label>
+                    <label>Image: </label>
+                    <br></br>
                     <input
                         type='text'
                         name='img'
                         value={state.img}
                         onChange={handleInputs}
                     />
+                    <label className={style.errors}>{errors.img}</label>
+                    <br></br>
                     <br></br>
 
-                    <button type='submit'>Crear pokemon </button>
+                    <button type='submit' disabled={Object.keys(errors).length || state.name === ""}>Create Pokemon</button>
                 </form>
             </div>
 
             <div className={style.types}>
-                <ul className={style.lista}>
+                <h4>Types</h4>
+                <ul>
                     {types?.map((type, index) => (
                         <li className={style.lista2} key={type.id}>
                             <div>
@@ -160,6 +218,7 @@ export default function CreatePokemon() {
                                     value={type.id}
                                     checked={type.isChecked}
                                     onChange={handleInputs}
+                                    disabled={state.types.length > 1 && type.isChecked === false}
                                 />
                                 <label htmlFor={`custom-checkbox-${types.id}`}>
                                     {type.name}
@@ -169,6 +228,7 @@ export default function CreatePokemon() {
                         </li>
                     ))}
                 </ul>
+                <p>{errors.types}</p>
             </div>
         </div>
     );

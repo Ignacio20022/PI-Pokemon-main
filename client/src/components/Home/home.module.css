@@ -1,22 +1,18 @@
-/* .home{
-    border: 2px solid red;
-} */
+body{
+    background-color: rgb(195, 127, 0);
+}
+
 .home{
     /* display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-items: center;
     align-items: center;
     display: flex; */
-    justify-content: center;
+    /* justify-content: center; */
     flex-wrap: wrap;
     gap: 7px;
     row-gap: 200%;
     border: 2px solid red;
-}
-
-.title{
-    /* justify-content: center; */
-    /* margin-right: 9px; */
 }
 
 img{

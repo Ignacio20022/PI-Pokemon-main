@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { Pokemon, Type } = require('../db');
-const {getAllPokemons, getPokemonByID, getPokemonByName, incrementalIdPokemons} = require('./utils');
+const {getAllPokemons, getPokemonByID, getPokemonByName, incrementalIdPokemons, getAllPokemonsNames} = require('./utils');
 const router = Router();
 
 // Retorna un arreglo de objetos con los datos de cada pokemon en la direccion '/pokemon'
@@ -26,6 +26,15 @@ router.get('/', async(req,res) => {
         }
     }
     
+})
+
+router.get("/names", async(req, res) => {
+    try {
+        const allPokesName = await getAllPokemonsNames()
+        res.status(200).send(allPokesName)
+    } catch (error) {
+        res.status(404).send(error)
+    }
 })
 
 router.post('/create', async(req, res) => {

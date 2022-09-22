@@ -4,6 +4,7 @@ dotenv.config()
 
 
 export const GET_ALL_POKEMONS = "GET_ALL_POKEMONS"
+export const GET_ALL_POKEMONS_NAMES = "GET_ALL_POKEMONS_NAMES"
 export const GET_POKEMON_BY_ID = "GET_POKEMON_BY_ID"
 export const GET_POKEMON_BY_NAME = "GET_POKEMON_BY_NAME"
 export const GET_TYPES = "GET_TYPES"
@@ -24,6 +25,18 @@ export const getAllPokemons = () => {
             console.log(error);
         })
 
+    }
+}
+
+export const getAllNames = () => {
+    return async function(dispatch){
+        await axios.get(`/pokemons/names`)
+        .then((pokemonNames) => {
+            dispatch({
+                type: GET_ALL_POKEMONS_NAMES,
+                payload: pokemonNames.data
+            })
+        })
     }
 }
 

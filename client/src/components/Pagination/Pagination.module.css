@@ -50,3 +50,8 @@
     background: red;
     color: #101010;
 }
+
+.arePokemon{
+    color: transparent;
+    font-weight: 0px;
+}
