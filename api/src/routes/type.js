@@ -6,7 +6,6 @@ const router = Router();
 router.get('/', async(req,res) => {
     
     const types = await getTypes()
-    console.log(types);
     types.map((type) => {
         Type.findOrCreate({
             where:{
@@ -14,7 +13,12 @@ router.get('/', async(req,res) => {
             }
         })
     })
-    res.send(types)
+    let types2 = await Type.findAll()
+    types2 = types2.map((type) => {
+        return type.dataValues
+    })
+
+    res.send(types2)
 })
 
 router.post('/create', (req,res) => {

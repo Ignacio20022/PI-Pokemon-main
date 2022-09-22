@@ -8,8 +8,11 @@ import './App.css';
 import NotFound from './components/NotFound/NotFound.jsx';
 import CreatePokemon from './components/CreatePokemon/CreatePokemon.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
+import Filters from './components/Filters/Filters.jsx';
 
 function App() {
+
+
 
     return (
         <div className="App">
@@ -31,6 +34,10 @@ function App() {
             <Route exact path='/pokemons/create'>
                 <Navbar/>
                 <CreatePokemon />
+            </Route>
+            <Route exact path='/pokemon/delete/:id'>
+                <Navbar/>
+                
             </Route>
             <Route path='*'>
                 <NotFound />

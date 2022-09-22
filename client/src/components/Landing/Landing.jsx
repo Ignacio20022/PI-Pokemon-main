@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 
 
 
-export default function() {
+export default function Landing() {
     const dispatch = useDispatch()
 
     const loadTypes = () => {
@@ -15,12 +15,10 @@ export default function() {
     return(
         <div className={style.box}>
             <div>
-            <h1>Pokemon API</h1>
-            <Link to={"/pokemons"}>
-                <button onClick={loadTypes}>Ingresar</button>
-
-            </Link>
-                
+                <h1>Pokemon API</h1>
+                <Link to={"/pokemons"}>
+                    <button onClick={loadTypes}>Ingresar</button>
+                </Link>
             </div>
         </div>
     )

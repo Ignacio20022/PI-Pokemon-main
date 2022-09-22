@@ -5,15 +5,34 @@
     /* display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-items: center;
-    align-items: center; */
-    /* display: flex; */
+    align-items: center;
+    display: flex; */
     justify-content: center;
     flex-wrap: wrap;
     gap: 7px;
     row-gap: 200%;
+    border: 2px solid red;
 }
 
-#img{
+.title{
+    /* justify-content: center; */
+    /* margin-right: 9px; */
+}
+
+img{
+    border: 2px solid red;
     height: 100px;
     width: 100px;
+}
+
+/* button{
+    float: left;
+    transform: rotate(90deg);
+} */
+
+.filters{
+    position: fixed;
+    width: 66px;
+    background-color: #34495e;
+    text-decoration: none;
 }

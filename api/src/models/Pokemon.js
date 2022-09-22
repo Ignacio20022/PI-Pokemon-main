@@ -21,22 +21,28 @@ module.exports = (sequelize) => {
         }
     },
     hp: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     },
     attk: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     },
     def: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     },
     speed: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     },
     height: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     },
     weight: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     },
     img : {
         type: DataTypes.STRING,
@@ -45,5 +51,7 @@ module.exports = (sequelize) => {
             else this.setDataValue('img', value)
         }
     }
+  },{
+    timestamps: false
   });
 };

@@ -1,7 +1,5 @@
-import assert from 'assert'
 import axios from 'axios'
 import dotenv from 'dotenv'
-import { Redirect } from 'react-router-dom'
 dotenv.config()
 
 
@@ -12,8 +10,6 @@ export const GET_TYPES = "GET_TYPES"
 export const CREATE_POKEMON = "CREATE_POKEMON"
 export const DELETE_POKEMON = "DELETE_POKEMON"
 export const CLEAR_DETAILS = "CLEAR_DETAILS" 
-
-const {REACT_APP_BACKEND_URL} = process.env
 
 export const getAllPokemons = () => {
     return async function(dispatch){
