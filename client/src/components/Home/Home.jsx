@@ -49,7 +49,7 @@ export default function Home() {
 
     return (
         <>
-            <Navbar search={setSearch} pag={setCurrentPage} />
+            <Navbar postsPerPage={setPostsPerPage} search={setSearch} pag={setCurrentPage} />
             <select >
                 <option hidden >Sort by...</option>
                 <option>A-Z</option>
