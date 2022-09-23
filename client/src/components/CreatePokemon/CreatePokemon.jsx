@@ -41,15 +41,8 @@ export default function CreatePokemon() {
     
                     setErrors(validateInputs(newData, pokemonsNames));
     
-                    console.log(errors);
-    
                     return newData;
                 });
-
-                // setState({
-                //     ...state,
-                //     types: state.types.concat(value),
-                // });
             } else if (!checked) {
                 setState((oldData) => {
                     const newData = { ...oldData, types : state.types.filter((i) => i !== value) };
@@ -58,11 +51,6 @@ export default function CreatePokemon() {
     
                     return newData;
                 });
-
-                // setState({
-                //     ...state,
-                //     types: state.types.filter((i) => i !== value),
-                // });
             }
         } 
         else {
@@ -77,23 +65,10 @@ export default function CreatePokemon() {
     };
 
     const handleSubmit = (event) => {
-        // event.preventDefault();
-        // setErrors(validateName(state.name, pokemons))
 
         if (!Object.keys(errors).length){
             dispatch(actions.createPokemon(state));
-            // setState({
-            //     name: "",
-            //     hp: 0,
-            //     attk: 0,
-            //     def: 0,
-            //     speed: 0,
-            //     height: 0,
-            //     weight: 0,
-            //     img: "",
-            //     types: [],
-            // })
-            // types.map((type) => type.isChecked = false)    
+
             alert ('Pokemon creado con exito')        
         } 
         else alert(`Please, check " ${Object.keys(errors)} " before submiting`);
@@ -212,6 +187,7 @@ export default function CreatePokemon() {
                         <li className={style.lista2} key={type.id}>
                             <div>
                                 <input
+                                    key={index}
                                     type='checkbox'
                                     id={index}
                                     name='types'

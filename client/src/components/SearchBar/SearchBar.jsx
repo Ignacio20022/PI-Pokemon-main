@@ -1,16 +1,23 @@
 import React, {useState} from "react";
+// import { useDispatch } from "react-redux";
+// import * as actions from '../../redux/actions/index.js'
 
-export default function SearchBar({search}){
+export default function SearchBar({search, pag}){
 
+    // const dispatch = useDispatch()
     const [name, setName] = useState("");
 
     const handleName = (event) => {
-        setName(event.target.value)
+        // event.preventDefault()
+        // setName(event.target.value)
+        pag(1)
+        search(event.target.value)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        search(name)
+        // dispatch(actions.getPokemonByName(name))
+        // search(name)
     }
 
     return(

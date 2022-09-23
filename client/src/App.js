@@ -7,11 +7,12 @@ import PokemonDetails from './components/PokemonDetails/PokemonDetails.jsx'
 import './App.css';
 import NotFound from './components/NotFound/NotFound.jsx';
 import CreatePokemon from './components/CreatePokemon/CreatePokemon.jsx';
-import Navbar from './components/Navbar/Navbar.jsx';
-import Filters from './components/Filters/Filters.jsx';
 import NavbarNoSearch from './components/Navbar/NavbarWitoutSearchBar.jsx';
+import Navbar from './components/Navbar/Navbar.jsx';
 
 function App() {
+
+
 
     return (
         <div className="App">

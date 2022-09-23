@@ -1,41 +1,51 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import * as actions from '../../redux/actions/index'
-import * as ReactRedux from 'react-redux'
+import * as actions from "../../redux/actions/index";
+import * as ReactRedux from "react-redux";
 
-export default function PokemonDetail(props){
+import style from "./PokemonDetails.module.css";
 
-    const {id} = useParams()
-    
-    let pokemon = ReactRedux.useSelector((state) => state.pokemonDetails)
-    
-    const dispatch = ReactRedux.useDispatch()
-    
-    
+export default function PokemonDetail(props) {
+    const { id } = useParams();
+
+    const pokemon = ReactRedux.useSelector((state) => state.pokemonDetails);
+
+    const dispatch = ReactRedux.useDispatch();
+
     useEffect(() => {
-        dispatch(actions.getPokemonById(id))
+        dispatch(actions.getPokemonById(id));
         return () => {
-            dispatch(actions.clearDetail())
-        }
-    },[dispatch, id])
+            dispatch(actions.clearDetail());
+        };
+    }, [dispatch, id]);
 
-    if(!Object.keys(pokemon).length){
-        return(
+    if (!Object.keys(pokemon).length) {
+        return (
             <div>
                 <h1>cargando</h1>
             </div>
-        )
-    }
-    else{        
+        );
+    } else {
         return (
-            <div>
-            <div>{pokemon.id}</div>
-            <div>{pokemon.name}</div>
-            <img src={pokemon.img} alt='imagen pokemon'/>
-            <p>{pokemon.types?.map((type) => type + " ")}</p>
-        </div>
+            <div className={style.details}>
+                <h2>{pokemon.id}</h2>
+                <h1>{pokemon.name.toUpperCase()}</h1>
+                <img src={pokemon.img} alt='imagen pokemon' />
+                <h4>
+                    Type(s) <br></br>
+                    {"\[" + pokemon.types?.map((type) => type.toUpperCase()) + '\]'}
+                </h4>
+                <h4>
+                    Stats <br></br> 
+                    HP: {pokemon.hp > 1 ? pokemon.hp : 'Unknown'}{" - "} 
+                    ATTK: {pokemon.attk > 1 ? pokemon.attk : 'Unknown'}{" - "}
+                    DEF:{pokemon.def > 1 ? pokemon.def : 'Unknown'}
+                    <br></br> 
+                    SPEED: {pokemon.speed > 1 ? pokemon.speed : 'Unknown'}{" - "}
+                    HEIGHT:{pokemon.height > 1 ? pokemon.height : 'Unknown'}{" - "}
+                    WEIGHT: {pokemon.weight > 1 ? pokemon.weight : 'Unknown'}
+                </h4>
+            </div>
         );
     }
-    
-};
-
+}

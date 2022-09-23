@@ -12,7 +12,7 @@ import {
 const initialState = {
     pokemons: [],
     pokemonDetails: {},
-    filterPokemons:[],
+    filteredPokemons:[],
     pokemonsNames:[],
     types: [],
     // error: [],
@@ -38,7 +38,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_POKEMON_BY_NAME:
             return{
                 ...state,
-                pokemonSearched: action.payload
+                filterePokemons: [action.payload]
             }
         case GET_TYPES:
             return{

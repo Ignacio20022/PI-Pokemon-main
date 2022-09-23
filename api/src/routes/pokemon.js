@@ -19,8 +19,8 @@ router.get('/', async(req,res) => {
     // En cambio si existe name el usuario busco por query
     else{
         try {
-            const poke = await getPokemonByName(name)
-            res.status(200).send(poke)
+            const pokemon = await getPokemonByName(name)
+            res.status(200).send(pokemon)
         } catch (error) {
             res.status(404).json(error)
         }

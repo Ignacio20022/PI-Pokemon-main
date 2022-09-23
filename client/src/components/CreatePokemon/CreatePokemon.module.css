@@ -1,6 +1,6 @@
 .box {
-    float: left;
-    width: 100%;
+    float: right;
+    width: 65%;
     height: 100%;
     /* border: 3px solid black; */
     overflow: hidden;
@@ -8,11 +8,11 @@
 }
 
 .form {
-    margin: 0 0 0 30%;
+    margin: 0 0 0 0;
     float: left;
-    width: 30%;
+    width: 50%;
     height: 100%;
-    border: 3px solid blue;
+    /* border: 3px solid blue; */
     text-align: left;
 }
 .form h4{

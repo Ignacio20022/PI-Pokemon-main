@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
     },
     hp: {
         type: DataTypes.INTEGER,
-        defaultValue: 0
+        defaultValue: 0,
     },
     attk: {
         type: DataTypes.INTEGER,

@@ -7,6 +7,7 @@ export default function Pagination({
     postsPerPage,
     setCurrentPage,
     currentPage,
+    setPokemonsToShow,
 }) {
     let pages = [];
 
@@ -17,6 +18,7 @@ export default function Pagination({
     return (
         <div className={style.pagination}>
             <button
+                hidden={totalPosts === 0}
                 className={style.buttonPrevNext}
                 onClick={() => {
                     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -41,6 +43,7 @@ export default function Pagination({
                 );
             })}
             <button
+                hidden={totalPosts === 0}
                 className={style.buttonPrevNext}
                 onClick={() => {
                     if (currentPage < pages.length)

@@ -8,7 +8,7 @@ async function getPokemonsAPI () {
     // al resultado le hace un map donde llama otra vez a la api pero ahora a los detalles de cada pokemon
     // y por ultimo retorna un objeto con los datos necesarios de cada uno
     let pokemonsAPI = 
-    await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=40')
+    await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=100')
     .then((resultAPI) => {
         return(
             Promise.all(resultAPI.data.results.map(async(elem)=>{
@@ -40,7 +40,6 @@ async function getAllPokemonsNames(){
 
     let pokemonsNamesAPI = 
     await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=2000') 
-
 
     pokemonsNamesAPI = pokemonsNamesAPI.data.results.map((elem) => elem.name)
 
@@ -167,23 +166,25 @@ async function getPokemonByName(name){
         return pokemonName
     }
     // En caso de que no se haya encontrado en la db busca en la api
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-    .then((details) => {
-        const poke = {
-            id: details.data.id,
-            name: details.data.name,
-            hp: details.data.stats[0].base_stat,
-            attk: details.data.stats[1].base_stat,
-            def: details.data.stats[2].base_stat,
-            speed: details.data.stats[5].base_stat,
-            types: details.data.types.map((type) => type.type.name),
-            height: details.data.height,
-            weight: details.data.weight,
-            img: details.data.sprites.front_default
-        }
-        return poke
-    })
-    // Si no se encuentra en la api tira error //TODO 404
+    return(
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
+        .then((details) => {
+            const poke = {
+                id: details.data.id,
+                name: details.data.name,
+                hp: details.data.stats[0].base_stat,
+                attk: details.data.stats[1].base_stat,
+                def: details.data.stats[2].base_stat,
+                speed: details.data.stats[5].base_stat,
+                types: details.data.types.map((type) => type.type.name),
+                height: details.data.height,
+                weight: details.data.weight,
+                img: details.data.sprites.front_default
+            }
+            return poke
+        })
+    )
+        // Si no se encuentra en la api tira error //TODO 404
     .catch((err) => {
         throw new Error('No se enconto el pokemon')
     })     

@@ -6,18 +6,13 @@ import { useDispatch } from 'react-redux'
 
 
 export default function Landing() {
-    const dispatch = useDispatch()
-
-    const loadTypes = () => {
-        dispatch(actions.getTypes())
-    }
 
     return(
         <div className={style.box}>
             <div>
                 <h1>Pokemon API</h1>
                 <Link to={"/pokemons"}>
-                    <button onClick={loadTypes}>Ingresar</button>
+                    <button>Ingresar</button>
                 </Link>
             </div>
         </div>
