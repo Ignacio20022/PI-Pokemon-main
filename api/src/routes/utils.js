@@ -39,7 +39,7 @@ async function getAllPokemonsNames(){
     pokemonNamesDB = pokemonNamesDB.map((pokemon) => pokemon.name)
 
     let pokemonsNamesAPI = 
-    await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=2000') 
+    await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=60') 
 
     pokemonsNamesAPI = pokemonsNamesAPI.data.results.map((elem) => elem.name)
 
