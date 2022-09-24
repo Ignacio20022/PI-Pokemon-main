@@ -24,8 +24,8 @@ export default function Pagination({
     const rederPagination = pages.map((page, index) => {
         if (page < maxLimit + 1 && page > minLimit) {
             return (
-                <button
-                    hidden={totalPosts < 2}
+                <button 
+                    hidden={totalPosts <= postsPerPage}
                     className={
                         page === currentPage
                             ? style.buttonNumActive
@@ -42,13 +42,13 @@ export default function Pagination({
 
     let pageIncrementBtn = null;
 
-    if (pages.length > maxLimit)
+    if (pages.length > maxLimit){
         pageIncrementBtn = (
-            <button
+            <button className={style.buttonPrevNext}
                 onClick={() => {
                     if (currentPage < pages.length) {
-                        setCurrentPage(currentPage + 1);
-                        if (currentPage + 1 > maxLimit) {
+                        setCurrentPage(maxLimit + 1);
+                        if (currentPage + pageLimit > maxLimit) {
                             setMaxLimit(maxLimit + pageLimit);
                             setMinLimit(minLimit + pageLimit);
                         }
@@ -58,30 +58,37 @@ export default function Pagination({
                 &hellip;
             </button>
         );
+    }
 
     let pageDecrementBtn = null;
 
-    if (pages.length > maxLimit)
+    if (pages.length > minLimit){
         pageDecrementBtn = (
-            <button
+            <button className={style.buttonPrevNext}
+            hidden={currentPage < 11}
                 onClick={() => {
                     if (currentPage > 1) {
-                        setCurrentPage(currentPage - 1);
-                        if ((currentPage - 1) % pageLimit === 0) {
-                            setMaxLimit(maxLimit - pageLimit);
-                            setMinLimit(minLimit - pageLimit);
-                        }
+                        setCurrentPage(minLimit);
+                        setMaxLimit(maxLimit - pageLimit);
+                        setMinLimit(minLimit - pageLimit);
                     }
                 }}
             >
                 &hellip;
             </button>
         );
+    }
+        
+    console.log("\n");
+    console.log(currentPage);
+    console.log(maxLimit);
+    console.log(minLimit);
+    console.log(pageLimit);
 
     return (
         <div className={style.pagination}>
             <button
-                hidden={totalPosts < 2}
+                hidden={totalPosts <= postsPerPage}
                 className={style.buttonPrevNext}
                 onClick={() => {
                     if (currentPage > 1) {
@@ -101,7 +108,7 @@ export default function Pagination({
             {pageIncrementBtn}
 
             <button
-                hidden={totalPosts < 2}
+                hidden={totalPosts <= postsPerPage}
                 className={style.buttonPrevNext}
                 onClick={() => {
                     if (currentPage < pages.length) {
