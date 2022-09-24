@@ -9,12 +9,12 @@ export default function CreatePokemon() {
     const dispatch = useDispatch();
 
     const types = useSelector((state) => state.types);
-    const pokemonsNames = useSelector((state) => state.pokemonsNames)
+    const pokemonsNames = useSelector((state) => state.pokemonsNames);
 
     useEffect(() => {
-        if(!types.length) dispatch(actions.getTypes());
-        if(!pokemonsNames.length) dispatch(actions.getAllNames())
-    }, [dispatch]);
+        if (!types.length) dispatch(actions.getTypes());
+        if (!pokemonsNames.length) dispatch(actions.getAllNames());
+    }, [dispatch, types.length, pokemonsNames.length]);
 
     const [errors, setErrors] = useState({});
 
@@ -37,23 +37,28 @@ export default function CreatePokemon() {
             types[id].isChecked = checked;
             if (checked) {
                 setState((oldData) => {
-                    const newData = { ...oldData, types: state.types.concat(value) };
-    
+                    const newData = {
+                        ...oldData,
+                        types: state.types.concat(value),
+                    };
+
                     setErrors(validateInputs(newData, pokemonsNames));
-    
+
                     return newData;
                 });
             } else if (!checked) {
                 setState((oldData) => {
-                    const newData = { ...oldData, types : state.types.filter((i) => i !== value) };
-    
+                    const newData = {
+                        ...oldData,
+                        types: state.types.filter((i) => i !== value),
+                    };
+
                     setErrors(validateInputs(newData, pokemonsNames));
-    
+
                     return newData;
                 });
             }
-        } 
-        else {
+        } else {
             setState((oldData) => {
                 const newData = { ...oldData, [name]: value };
 
@@ -65,21 +70,23 @@ export default function CreatePokemon() {
     };
 
     const handleSubmit = (event) => {
-
-        if (!Object.keys(errors).length){
+        if (!Object.keys(errors).length) {
             dispatch(actions.createPokemon(state));
 
-            alert ('Pokemon creado con exito')        
-        } 
-        else alert(`Please, check " ${Object.keys(errors)} " before submiting`);
+            alert("Pokemon creado con exito");
+        } else
+            alert(`Please, check " ${Object.keys(errors)} " before submiting`);
     };
 
     return (
         <div className={style.box}>
             <div className={style.form}>
-                <h4>Name and stats</h4> 
-                <form onSubmit={handleSubmit} autoComplete="off">
-                    <label>Name: </label> 
+                <h4>Name and stats</h4>
+                <form
+                    onSubmit={handleSubmit}
+                    autoComplete='off'
+                >
+                    <label>Name: </label>
                     <br></br>
                     <input
                         className={errors.name && "danger"}
@@ -176,7 +183,14 @@ export default function CreatePokemon() {
                     <br></br>
                     <br></br>
 
-                    <button type='submit' disabled={Object.keys(errors).length || state.name === ""}>Create Pokemon</button>
+                    <button
+                        type='submit'
+                        disabled={
+                            Object.keys(errors).length || state.name === ""
+                        }
+                    >
+                        Create Pokemon
+                    </button>
                 </form>
             </div>
 
@@ -194,7 +208,10 @@ export default function CreatePokemon() {
                                     value={type.id}
                                     checked={type.isChecked}
                                     onChange={handleInputs}
-                                    disabled={state.types.length > 1 && type.isChecked === false}
+                                    disabled={
+                                        state.types.length > 1 &&
+                                        type.isChecked === false
+                                    }
                                 />
                                 <label htmlFor={`custom-checkbox-${types.id}`}>
                                     {type.name}

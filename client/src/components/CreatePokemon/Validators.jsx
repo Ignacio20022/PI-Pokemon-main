@@ -10,6 +10,7 @@ export function validateInputs(input, pokemonsNames) {
             if(name.toLowerCase() === input.name.toLowerCase()){
                 errors.name = `${input.name} is already in use`
             }
+            else return null
         })
     }
 
@@ -40,14 +41,3 @@ export function validateInputs(input, pokemonsNames) {
 
     return errors
 }
-
-// export function validateName(name, pokemons){
-//     const errors = {}
-
-//     pokemons.map((pokemon) =>{
-//         if(pokemon.name.toLowerCase() === name.toLowerCase()){
-//             errors.name = `${name} is already in use`
-//             return errors
-//         }
-//     })
-// }

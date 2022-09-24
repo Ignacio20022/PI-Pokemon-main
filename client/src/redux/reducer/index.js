@@ -1,9 +1,8 @@
-import { bindActionCreators } from "redux";
 import { 
     GET_ALL_POKEMONS,
     GET_ALL_POKEMONS_NAMES,
     GET_POKEMON_BY_ID,
-    GET_POKEMON_BY_NAME,
+    // GET_POKEMON_BY_NAME,
     GET_TYPES,
     CREATE_POKEMON,
     DELETE_POKEMON,
@@ -73,6 +72,12 @@ const rootReducer = (state = initialState, action) => {
 
             filtered = state.pokemons.slice()
 
+            if(API_or_DB === 'API') filtered = state.pokemons.filter((pokemon) => pokemon.id < 20000)
+            if(API_or_DB === 'DB') {
+                filtered = filtered.filter((pokemon) => pokemon.id > 20000)
+                if(!filtered.length) filtered[0] = 0
+            }
+            
             if(sortBy === "A-Z"){
                 filtered.sort((a,b) => {
                     if(a.name.toLowerCase() > b.name.toLowerCase())return 1;
@@ -80,7 +85,7 @@ const rootReducer = (state = initialState, action) => {
                     return 0;
                 })
             }
-            else if (sortBy === "Z-A"){
+            if (sortBy === "Z-A"){
                 filtered.sort((a,b) => {
                     if(a.name.toLowerCase() < b.name.toLowerCase())return 1;
                     if(a.name.toLowerCase() > b.name.toLowerCase())return -1;
@@ -88,17 +93,11 @@ const rootReducer = (state = initialState, action) => {
                 })
             }
 
-            if(API_or_DB === 'API' && filtered[1] !== 1) filtered = state.pokemons.filter((pokemon) => pokemon.id < 20000)
-            else if(API_or_DB === 'DB') {
-                filtered = filtered.filter((pokemon) => pokemon.id > 20000)
-                if(!filtered.length) filtered[0] = 0
-            }
 
             if(types !== 'default' && filtered[0] !== 0) {
                 filtered = filtered.filter((pokemon) => pokemon.types.includes(types))
                 if(!filtered.length) filtered[0] = 1
             }
-            
             return{
                 ...state,
                 filteredPokemons: filtered
@@ -106,7 +105,6 @@ const rootReducer = (state = initialState, action) => {
         case RESET_FILTERS:
             return{
                 ...state,
-                pokemons: state.pokemons,
                 filteredPokemons: []
             }
         // case ERROR:

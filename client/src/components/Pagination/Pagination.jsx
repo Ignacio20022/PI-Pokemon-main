@@ -24,7 +24,7 @@ export default function Pagination({
     const rederPagination = pages.map((page, index) => {
         if (page < maxLimit + 1 && page > minLimit) {
             return (
-                <button 
+                <button
                     hidden={totalPosts <= postsPerPage}
                     className={
                         page === currentPage
@@ -37,14 +37,15 @@ export default function Pagination({
                     {page}
                 </button>
             );
-        }
+        } else return null;
     });
 
     let pageIncrementBtn = null;
 
-    if (pages.length > maxLimit){
+    if (pages.length > maxLimit) {
         pageIncrementBtn = (
-            <button className={style.buttonPrevNext}
+            <button
+                className={style.buttonPrevNext}
                 onClick={() => {
                     if (currentPage < pages.length) {
                         setCurrentPage(maxLimit + 1);
@@ -62,10 +63,11 @@ export default function Pagination({
 
     let pageDecrementBtn = null;
 
-    if (pages.length > minLimit){
+    if (pages.length > minLimit) {
         pageDecrementBtn = (
-            <button className={style.buttonPrevNext}
-            hidden={currentPage < 11}
+            <button
+                className={style.buttonPrevNext}
+                hidden={currentPage < 11}
                 onClick={() => {
                     if (currentPage > 1) {
                         setCurrentPage(minLimit);
@@ -78,12 +80,6 @@ export default function Pagination({
             </button>
         );
     }
-        
-    console.log("\n");
-    console.log(currentPage);
-    console.log(maxLimit);
-    console.log(minLimit);
-    console.log(pageLimit);
 
     return (
         <div className={style.pagination}>
