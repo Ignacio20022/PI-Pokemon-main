@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar'
 import style from './Navbar.module.css'
 
-export default function Navbar({postsPerPage, search, pag}){
+export default function Navbar({postsPerPage, setSearch, pag, search}){
 
     const handleChange = (event) => {
         event.preventDefault()
@@ -28,7 +28,7 @@ export default function Navbar({postsPerPage, search, pag}){
                     </select>
                 </div>
                 <div className={style.searchbar}>
-                    <SearchBar search={search} pag={pag}/>
+                    <SearchBar setSearch={setSearch} pag={pag} search={search}/>
                 </div>
                 <Link to='/pokemons/create' className={style.link}>
                     <span className={style.create}>Create</span>

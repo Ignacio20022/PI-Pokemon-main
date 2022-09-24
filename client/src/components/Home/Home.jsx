@@ -45,8 +45,6 @@ export default function Home() {
     //     dispatch(actions.filterPokemons(event.target.value))
     // }
 
-    //! los filtros no se limpian bien ni se linkean
-
     const handleAllFilters = (event) => {
         // event.preventDefault()
         setFilters({
@@ -67,6 +65,7 @@ export default function Home() {
             types: "default",
         });
         setCurrentPage(1);
+        // setSearch("")
         dispatch(actions.resetFilters());
     };
 
@@ -75,7 +74,7 @@ export default function Home() {
 
     if (filteredPokemons.length > 0) pokemons = filteredPokemons;
 
-    if (search.length > 0) {
+    if (search.length > 0 && ( pokemons[0] !== 0 && pokemons[0] !== 1)) {
         pokemons = pokemons.filter((pokemon) => {
             if (
                 pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -102,14 +101,13 @@ export default function Home() {
         );
     }
 
-    console.log(currentPokemons);
-
     return (
         <>
             <Navbar
                 postsPerPage={setPostsPerPage}
-                search={setSearch}
+                setSearch={setSearch}
                 pag={setCurrentPage}
+                search={search}
             />
 
             <div className={style.sortsContainer}>
@@ -175,11 +173,11 @@ export default function Home() {
                             />
                         );
                     })
-                ) : currentPokemons[0] === 0 ? (
+                ) : (currentPokemons[0] === 0 ? (
                     <h1>There are no Pokemons in the Data Base </h1>
                 ) : (
                     <h1>No Pokemon exist with that type</h1>
-                )}
+                ))}
 
                 <Pagination
                     totalPosts={pokemons.length}
