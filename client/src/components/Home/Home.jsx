@@ -72,6 +72,10 @@ export default function Home() {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(12);
 
+    const [pageLimit, setPageLimit] = useState(10);
+    const [maxLimit, setMaxLimit] = useState(10);
+    const [minLimit, setMinLimit] = useState(0);
+
     if (filteredPokemons.length > 0) pokemons = filteredPokemons;
 
     if (search.length > 0 && ( pokemons[0] !== 0 && pokemons[0] !== 1)) {
@@ -171,12 +175,16 @@ export default function Home() {
                                 types={pokemon.types}
                                 img={pokemon.img}
                             />
+                            
+
                         );
                     })
+                    
                 ) : (currentPokemons[0] === 0 ? (
                     <h1>There are no Pokemons in the Data Base </h1>
                 ) : (
                     <h1>No Pokemon exist with that type</h1>
+                    
                 ))}
 
                 <Pagination
@@ -184,7 +192,15 @@ export default function Home() {
                     postsPerPage={postsPerPage}
                     setCurrentPage={setCurrentPage}
                     currentPage={currentPage}
+
+                    maxLimit={maxLimit}
+                    setMaxLimit={setMaxLimit}
+                    minLimit={minLimit}
+                    setMinLimit={setMinLimit}
+                    pageLimit={pageLimit}
+                    setPageLimit={setPageLimit}
                 />
+
             </div>
             <br></br>
             <br></br>
