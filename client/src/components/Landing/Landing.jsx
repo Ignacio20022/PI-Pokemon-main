@@ -1,9 +1,5 @@
 import style from './Landing.module.css'
 import { Link } from 'react-router-dom'
-import * as actions from '../../redux/actions/index.js'
-import { useDispatch } from 'react-redux'
-
-
 
 export default function Landing() {
 

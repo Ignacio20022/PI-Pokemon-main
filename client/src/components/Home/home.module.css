@@ -2,6 +2,36 @@ body{
     background-color: rgb(195, 127, 0);
 }
 
+.sortsContainer{
+    padding-top: 20px;
+    height: 90px;
+    /* border: 2px solid red; */
+}
+
+.sortsContainer button{
+    margin-top: 20px;
+    width: 140px;
+    height: 40px;
+    font-size: larger;
+    border-radius: 7px;
+}
+
+.sortsContainer select{
+    margin: 0 10px 0 10px;
+    border-radius: 7px;
+}
+
+.sorts{
+    width: 140px;
+    height: 40px;
+}
+
+.pokesFrom{
+    width: 240px;
+    height: 40px;
+}
+
+
 .home{
     /* display: grid;
     grid-template-columns: repeat(3,1fr);
@@ -10,7 +40,7 @@ body{
     display: flex; */
     /* justify-content: center; */
     flex-wrap: wrap;
-    gap: 7px;
+    /* gap: 90px; */
     row-gap: 200%;
     /* border: 2px solid red; */
 }
@@ -19,10 +49,3 @@ body{
     float: left;
     transform: rotate(90deg);
 } */
-
-.filters{
-    position: fixed;
-    width: 66px;
-    background-color: #34495e;
-    text-decoration: none;
-}

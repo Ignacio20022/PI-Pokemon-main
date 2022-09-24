@@ -11,12 +11,69 @@ export default function Home() {
     const dispatch = useDispatch();
 
     let pokemons = useSelector((state) => state.pokemons);
-    const types = useSelector((state) => state.types)
+    const filteredPokemons = useSelector((state) => state.filteredPokemons);
+    const types = useSelector((state) => state.types);
 
     const [search, setSearch] = useState("");
 
+    // const [, updateState] = useState();
+    // const forceUpdate = useCallback(() => updateState({}), []);
+
+    const [filters, setFilters] = useState({
+        sortBy: "default",
+        API_or_DB: "default",
+        types: "default",
+    });
+
+    // const handleFiltersSort = (event) => {
+    //     event.preventDefault()
+    //     setFilters({
+    //         ...filters,
+    //         [event.target.name]: event.target.value
+    //     })
+    //     setCurrentPage(1)
+    //     dispatch(actions.filterPokemons(event.target.value))
+    // }
+
+    // const handleFiltersAPI_DB = (event) => {
+    //     event.preventDefault()
+    //     setFilters({
+    //         ...filters,
+    //         [event.target.name]: event.target.value
+    //     })
+    //     setCurrentPage(1)
+    //     dispatch(actions.filterPokemons(event.target.value))
+    // }
+
+    //! los filtros no se limpian bien ni se linkean
+
+    const handleAllFilters = (event) => {
+        // event.preventDefault()
+        setFilters({
+            ...filters,
+            [event.target.name]: event.target.value,
+        });
+        setCurrentPage(1);
+    };
+    useEffect(() => {
+        dispatch(actions.filterPokemons(filters));
+    }, [filters]);
+
+    const resetFilters = (event) => {
+        event.preventDefault();
+        setFilters({
+            sortBy: "default",
+            API_or_DB: "default",
+            types: "default",
+        });
+        setCurrentPage(1);
+        dispatch(actions.resetFilters());
+    };
+
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(12);
+
+    if (filteredPokemons.length > 0) pokemons = filteredPokemons;
 
     if (search.length > 0) {
         pokemons = pokemons.filter((pokemon) => {
@@ -34,10 +91,8 @@ export default function Home() {
 
     useEffect(() => {
         if (!pokemons.length) dispatch(actions.getAllPokemons());
-        dispatch(actions.getTypes())
+        dispatch(actions.getTypes());
     }, [dispatch, pokemons.length]);
-
-    useEffect(() => {});
 
     if (!pokemons.length && search === "") {
         return (
@@ -47,29 +102,68 @@ export default function Home() {
         );
     }
 
+    console.log(currentPokemons);
+
     return (
         <>
-            <Navbar postsPerPage={setPostsPerPage} search={setSearch} pag={setCurrentPage} />
-            <select >
-                <option hidden >Sort by...</option>
-                <option>A-Z</option>
-                <option>Z-A</option>
-                
-            </select>
-            <select>
-            <option hidden>Types</option>
-            {types.map((type, index) => {
-                return(
-                    <option key={index}>
-                        {type.name}
+            <Navbar
+                postsPerPage={setPostsPerPage}
+                search={setSearch}
+                pag={setCurrentPage}
+            />
+
+            <div className={style.sortsContainer}>
+                <select
+                    name='sortBy'
+                    value={filters.sortBy}
+                    className={style.sorts}
+                    onChange={handleAllFilters}
+                >
+                    <option hidden value='default'>
+                        Sort by...
                     </option>
-                )
-            })}
-            </select>
+                    <option value='A-Z'>A-Z</option>
+                    <option value='Z-A'>Z-A</option>
+                </select>
+
+                <select
+                    name='API_or_DB'
+                    value={filters.API_or_DB}
+                    className={style.pokesFrom}
+                    onChange={handleAllFilters}
+                >
+                    <option hidden value='default'>
+                        Show pokemons from...
+                    </option>
+                    <option value='API'>Poke API</option>
+                    <option value='DB'>Data Base</option>
+                </select>
+
+                <select
+                    name='types'
+                    value={filters.types}
+                    className={style.sorts}
+                    onChange={handleAllFilters}
+                >
+                    <option hidden value='default'>
+                        Types...
+                    </option>
+                    {types.map((type, index) => {
+                        return (
+                            <option key={index} value={type.name}>
+                                {type.name}
+                            </option>
+                        );
+                    })}
+                </select>
+                <br></br>
+
+                <button onClick={resetFilters}>Reset filters</button>
+            </div>
             <h1 className={style.title}>Pokemons</h1>
             <div className={style.home}>
-
-                {pokemons.length && currentPokemons.length ? (
+                {currentPokemons[0] !== 0 &&
+                currentPokemons[0] !== 1 ? (
                     currentPokemons.map((pokemon) => {
                         return (
                             <PokemonCard
@@ -81,9 +175,12 @@ export default function Home() {
                             />
                         );
                     })
+                ) : currentPokemons[0] === 0 ? (
+                    <h1>There are no Pokemons in the Data Base </h1>
                 ) : (
-                    <h1>No se encontro el pokemon</h1>
+                    <h1>No Pokemon exist with that type</h1>
                 )}
+
                 <Pagination
                     totalPosts={pokemons.length}
                     postsPerPage={postsPerPage}
@@ -98,7 +195,6 @@ export default function Home() {
             <br></br>
             <br></br>
             <br></br>
-            {/* <button onClick={() => setPostsPerPage(15)}>dsa</button> */}
         </>
     );
 }

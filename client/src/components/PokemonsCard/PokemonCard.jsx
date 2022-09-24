@@ -8,7 +8,6 @@ export default function PokemonCard(props){
     return(
         <div className={style.box} key={props.id}>
             <div className={style.select}>
-
             <Link to={`/pokemons/details/${props.id}`} className={style.link}>
                 <h1 className={style.nombre}>{props.name}</h1>
                 <div>

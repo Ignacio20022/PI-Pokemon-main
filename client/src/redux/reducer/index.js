@@ -1,3 +1,4 @@
+import { bindActionCreators } from "redux";
 import { 
     GET_ALL_POKEMONS,
     GET_ALL_POKEMONS_NAMES,
@@ -6,13 +7,15 @@ import {
     GET_TYPES,
     CREATE_POKEMON,
     DELETE_POKEMON,
-    CLEAR_DETAILS
+    CLEAR_DETAILS,
+    FILTER_POKEMONS,
+    RESET_FILTERS
 } from "../actions";
 
 const initialState = {
     pokemons: [],
     pokemonDetails: {},
-    filteredPokemons:[],
+    filteredPokemons: [],
     pokemonsNames:[],
     types: [],
     // error: [],
@@ -35,11 +38,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 pokemonDetails: action.payload
             }
-        case GET_POKEMON_BY_NAME:
-            return{
-                ...state,
-                filterePokemons: [action.payload]
-            }
+        // case GET_POKEMON_BY_NAME:
+        //     return{
+        //         ...state,
+        //         filteredPokemons: [action.payload]
+        //     }
         case GET_TYPES:
             return{
                 ...state,
@@ -58,7 +61,53 @@ const rootReducer = (state = initialState, action) => {
         case CLEAR_DETAILS:
             return{
                 ...state,
-                pokemonDetails: action.payload
+                pokemonDetails: {}
+            }
+        case FILTER_POKEMONS:
+            const {sortBy, API_or_DB, types} = action.payload
+
+            let filtered = []
+
+            // if(!state.filteredPokemons.length) filtered = state.pokemons.slice()
+            // else filtered = state.filteredPokemons
+
+            filtered = state.pokemons.slice()
+
+            if(sortBy === "A-Z"){
+                filtered.sort((a,b) => {
+                    if(a.name.toLowerCase() > b.name.toLowerCase())return 1;
+                    if(a.name.toLowerCase() < b.name.toLowerCase())return -1;
+                    return 0;
+                })
+            }
+            else if (sortBy === "Z-A"){
+                filtered.sort((a,b) => {
+                    if(a.name.toLowerCase() < b.name.toLowerCase())return 1;
+                    if(a.name.toLowerCase() > b.name.toLowerCase())return -1;
+                    return 0;
+                })
+            }
+
+            if(API_or_DB === 'API' && filtered[1] !== 1) filtered = state.pokemons.filter((pokemon) => pokemon.id < 20000)
+            else if(API_or_DB === 'DB') {
+                filtered = filtered.filter((pokemon) => pokemon.id > 20000)
+                if(!filtered.length) filtered[0] = 0
+            }
+
+            if(types !== 'default' && filtered[0] !== 0) {
+                filtered = filtered.filter((pokemon) => pokemon.types.includes(types))
+                if(!filtered.length) filtered[0] = 1
+            }
+            
+            return{
+                ...state,
+                filteredPokemons: filtered
+            }
+        case RESET_FILTERS:
+            return{
+                ...state,
+                pokemons: state.pokemons,
+                filteredPokemons: []
             }
         // case ERROR:
         //     return{
