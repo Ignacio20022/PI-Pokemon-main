@@ -4,7 +4,7 @@ import React, {useState} from "react";
 
 import s from './SearchBar.module.css'
 
-export default function SearchBar({search, pag}){
+export default function SearchBar({setSearch, pag, search}){
 
     // const dispatch = useDispatch()
     // const [name, setName] = useState("");
@@ -13,7 +13,7 @@ export default function SearchBar({search, pag}){
         event.preventDefault()
         // setName(event.target.value)
         pag(1)
-        search(event.target.value)
+        setSearch(event.target.value)
     }
 
     const handleSubmit = (event) => {
@@ -29,6 +29,7 @@ export default function SearchBar({search, pag}){
                 type='text'
                 placeholder="Search pokemons"
                 onChange={handleName}
+                value={search}
             />
         </form>
     )
