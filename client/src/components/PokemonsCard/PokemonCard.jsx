@@ -12,7 +12,7 @@ export default function PokemonCard(props){
                 <h1 className={style.nombre}>{props.name}</h1>
                 <div>
                     <h3 className={style.types}>{props.types?.map((type) => type + " ")}</h3>
-                    <img id={style.img} src={props.img} alt='imagen pokemon'/>
+                    <img id={style.img} src={props.img} alt='Pokemon'/>
                 </div>
             </Link>
             </div>

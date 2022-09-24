@@ -33,7 +33,7 @@ export default function PokemonDetail(props) {
                 <img src={pokemon.img} alt='imagen pokemon' />
                 <h4>
                     Type(s) <br></br>
-                    {"\[" + pokemon.types?.map((type) => type.toUpperCase()) + '\]'}
+                    {"\n" + pokemon.types?.map((type) => type.toUpperCase())}
                 </h4>
                 <h4>
                     Stats <br></br> 

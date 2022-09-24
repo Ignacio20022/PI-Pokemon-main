@@ -5,7 +5,7 @@ import * as actions from "../../redux/actions/index.js";
 
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../Pagination/Pagination.jsx";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "../Navbar/HomeNavbar";
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -25,26 +25,6 @@ export default function Home() {
         types: "default",
     });
 
-    // const handleFiltersSort = (event) => {
-    //     event.preventDefault()
-    //     setFilters({
-    //         ...filters,
-    //         [event.target.name]: event.target.value
-    //     })
-    //     setCurrentPage(1)
-    //     dispatch(actions.filterPokemons(event.target.value))
-    // }
-
-    // const handleFiltersAPI_DB = (event) => {
-    //     event.preventDefault()
-    //     setFilters({
-    //         ...filters,
-    //         [event.target.name]: event.target.value
-    //     })
-    //     setCurrentPage(1)
-    //     dispatch(actions.filterPokemons(event.target.value))
-    // }
-
     const handleAllFilters = (event) => {
         // event.preventDefault()
         setFilters({
@@ -52,10 +32,12 @@ export default function Home() {
             [event.target.name]: event.target.value,
         });
         setCurrentPage(1);
+        setMinLimit(0);
+        setMaxLimit(10);
     };
     useEffect(() => {
         dispatch(actions.filterPokemons(filters));
-    }, [filters]);
+    }, [dispatch, filters]);
 
     const resetFilters = (event) => {
         event.preventDefault();
@@ -65,22 +47,29 @@ export default function Home() {
             types: "default",
         });
         setCurrentPage(1);
-        // setSearch("")
+        setMinLimit(0);
+        setMaxLimit(10);
         dispatch(actions.resetFilters());
     };
 
+    //Pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage, setPostsPerPage] = useState(12);
 
+    const [pageLimit, setPageLimit] = useState(10);
+    const [maxLimit, setMaxLimit] = useState(10);
+    const [minLimit, setMinLimit] = useState(0);
+
     if (filteredPokemons.length > 0) pokemons = filteredPokemons;
 
-    if (search.length > 0 && ( pokemons[0] !== 0 && pokemons[0] !== 1)) {
+    if (search.length > 0 && pokemons[0] !== 0 && pokemons[0] !== 1) {
         pokemons = pokemons.filter((pokemon) => {
             if (
                 pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
                 pokemon.name.includes(search)
             )
                 return pokemon;
+            else return null;
         });
     }
 
@@ -120,6 +109,7 @@ export default function Home() {
                     <option hidden value='default'>
                         Sort by...
                     </option>
+                    <option value='default'>By default</option>
                     <option value='A-Z'>A-Z</option>
                     <option value='Z-A'>Z-A</option>
                 </select>
@@ -133,6 +123,7 @@ export default function Home() {
                     <option hidden value='default'>
                         Show pokemons from...
                     </option>
+                    <option value='default'> By default</option>
                     <option value='API'>Poke API</option>
                     <option value='DB'>Data Base</option>
                 </select>
@@ -146,6 +137,7 @@ export default function Home() {
                     <option hidden value='default'>
                         Types...
                     </option>
+                    <option value='default'>By default</option>
                     {types.map((type, index) => {
                         return (
                             <option key={index} value={type.name}>
@@ -160,8 +152,7 @@ export default function Home() {
             </div>
             <h1 className={style.title}>Pokemons</h1>
             <div className={style.home}>
-                {currentPokemons[0] !== 0 &&
-                currentPokemons[0] !== 1 ? (
+                {currentPokemons[0] !== 0 && currentPokemons[0] !== 1 ? (
                     currentPokemons.map((pokemon) => {
                         return (
                             <PokemonCard
@@ -173,17 +164,23 @@ export default function Home() {
                             />
                         );
                     })
-                ) : (currentPokemons[0] === 0 ? (
+                ) : currentPokemons[0] === 0 ? (
                     <h1>There are no Pokemons in the Data Base </h1>
                 ) : (
                     <h1>No Pokemon exist with that type</h1>
-                ))}
+                )}
 
                 <Pagination
                     totalPosts={pokemons.length}
                     postsPerPage={postsPerPage}
                     setCurrentPage={setCurrentPage}
                     currentPage={currentPage}
+                    maxLimit={maxLimit}
+                    setMaxLimit={setMaxLimit}
+                    minLimit={minLimit}
+                    setMinLimit={setMinLimit}
+                    pageLimit={pageLimit}
+                    setPageLimit={setPageLimit}
                 />
             </div>
             <br></br>
