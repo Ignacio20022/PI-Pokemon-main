@@ -7,10 +7,10 @@ import s from './SearchBar.module.css'
 export default function SearchBar({search, pag}){
 
     // const dispatch = useDispatch()
-    const [name, setName] = useState("");
+    // const [name, setName] = useState("");
 
     const handleName = (event) => {
-        // event.preventDefault()
+        event.preventDefault()
         // setName(event.target.value)
         pag(1)
         search(event.target.value)

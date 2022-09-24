@@ -13,13 +13,19 @@
     margin: 0 0 0 -300px;
     /* border: 2px solid red; */
 }
+.selector select{
+    background-color: #34495e;
+    border: 2px solid black;
+    color: white;
+    border-radius: 5px;
+}
 
 .searchbar{
     /* float: left;
     margin: 0 0 0 -600px; */
     /* margin: auto; */
     margin: 10px 0 0 50%;
-    position: fixed;
+    position: absolute;
 }
 
 .link{
@@ -30,7 +36,7 @@
 
     text-decoration: none;
     color: white;
-    border : 2px solid red;
+    /* border : 2px solid red; */
 }
 
 .create{
