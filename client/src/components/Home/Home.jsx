@@ -6,6 +6,7 @@ import * as actions from "../../redux/actions/index.js";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../Pagination/Pagination.jsx";
 import Navbar from "../Navbar/HomeNavbar";
+import Loading from "../Loading/Loading";
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -15,9 +16,6 @@ export default function Home() {
     const types = useSelector((state) => state.types);
 
     const [search, setSearch] = useState("");
-
-    // const [, updateState] = useState();
-    // const forceUpdate = useCallback(() => updateState({}), []);
 
     const [filters, setFilters] = useState({
         sortBy: "default",
@@ -46,6 +44,7 @@ export default function Home() {
             API_or_DB: "default",
             types: "default",
         });
+        setSearch("")
         setCurrentPage(1);
         setMinLimit(0);
         setMaxLimit(10);
@@ -79,14 +78,12 @@ export default function Home() {
 
     useEffect(() => {
         if (!pokemons.length) dispatch(actions.getAllPokemons());
-        dispatch(actions.getTypes());
+        if (!types.length) dispatch(actions.getTypes());
     }, [dispatch, pokemons.length]);
 
     if (!pokemons.length && search === "") {
         return (
-            <div>
-                <h1>cargando</h1>
-            </div>
+            <Loading/>
         );
     }
 

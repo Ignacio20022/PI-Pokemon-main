@@ -90,7 +90,6 @@ export default function CreatePokemon() {
                     <label>Name: </label>
                     <br></br>
                     <input
-                        className={errors.name && "danger"}
                         type='text'
                         name='name'
                         value={state.name}
@@ -172,7 +171,7 @@ export default function CreatePokemon() {
                     <br></br>
                     <br></br>
 
-                    <label>Image: </label>
+                    <label>Image: (url)</label>
                     <br></br>
                     <input
                         type='text'

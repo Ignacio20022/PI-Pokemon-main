@@ -1,0 +1,10 @@
+.loading{
+    background-color: rgb(24, 27, 29) ;
+    aspect-ratio: 1/1;
+    width: 100%;
+    position: fixed;
+}
+
+.loading img{
+    width: 20%;
+}
