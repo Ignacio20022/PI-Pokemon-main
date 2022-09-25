@@ -14,8 +14,9 @@ export default function Navbar({
     const handleChange = (event) => {
         event.preventDefault();
         setCurrentPage(1);
+        setMinLimit(0);
+        setMaxLimit(10);
         setPostsPerPage(event.target.value);
-
     };
 
     return (
