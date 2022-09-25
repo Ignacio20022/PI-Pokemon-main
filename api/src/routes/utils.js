@@ -23,7 +23,7 @@ async function getPokemonsAPI () {
                     types: details.data.types.map((type) => type.type.name),
                     height: details.data.height,
                     weight: details.data.weight,
-                    img: details.data.sprites.other.home.front_default
+                    img: details.data.sprites.other.home.front_default || details.data.sprites.other.official-artwork
                 }
             }))
             .catch((error) => {throw error})
@@ -115,7 +115,7 @@ async function getPokemonByID(id) {
                     types: details.data.types.map((type) => type.type.name),
                     height: details.data.height,
                     weight: details.data.weight,
-                    img: details.data.sprites.other.home.front_default
+                    img: details.data.sprites.other.home.front_default || details.data.sprites.other.official-artwork
                 }
                 return poke
             })
@@ -179,7 +179,7 @@ async function getPokemonByName(name){
                 types: details.data.types.map((type) => type.type.name),
                 height: details.data.height,
                 weight: details.data.weight,
-                img: details.data.sprites.front_default
+                img: details.data.sprites.other.home.front_default || details.data.sprites.other.official-artwork
             }
             return poke
         })
