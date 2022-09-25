@@ -85,6 +85,7 @@ export default function CreatePokemon() {
                 <form
                     onSubmit={handleSubmit}
                     autoComplete='off'
+                    spellcheck="false"
                 >
                     <label>Name: </label>
                     <br></br>

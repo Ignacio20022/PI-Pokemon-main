@@ -26,7 +26,7 @@ export default function Home() {
     });
 
     const handleAllFilters = (event) => {
-        // event.preventDefault()
+        event.preventDefault()
         setFilters({
             ...filters,
             [event.target.name]: event.target.value,
@@ -93,10 +93,13 @@ export default function Home() {
     return (
         <>
             <Navbar
-                postsPerPage={setPostsPerPage}
-                setSearch={setSearch}
-                pag={setCurrentPage}
                 search={search}
+                setSearch={setSearch}
+                setPostsPerPage={setPostsPerPage}
+                setCurrentPage={setCurrentPage}
+                setMaxLimit={setMaxLimit}
+                setMinLimit={setMinLimit}
+                setPageLimit={setPageLimit}
             />
 
             <div className={style.sortsContainer}>
