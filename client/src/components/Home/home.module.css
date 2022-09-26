@@ -31,21 +31,33 @@ body{
     height: 40px;
 }
 
+.sadPoke{
+    position: fixed;
+    width: 65%;
+    padding-top: 100px ;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
 
 .home{
     /* display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-items: center;
-    align-items: center;
-    display: flex; */
-    /* justify-content: center; */
+    align-items: center; */
+    display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    /* gap: 90px; */
-    row-gap: 200%;
-    /* border: 2px solid red; */
+    gap: 20px;
+    padding: 10px;
 }
 
 /* button{
     float: left;
     transform: rotate(90deg);
 } */
+
+.error{
+    justify-content: end;
+}

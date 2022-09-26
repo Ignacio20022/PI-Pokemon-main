@@ -12,6 +12,8 @@ export const DELETE_POKEMON = "DELETE_POKEMON"
 export const CLEAR_DETAILS = "CLEAR_DETAILS" 
 export const FILTER_POKEMONS = "FILTER_POKEMONS"
 export const RESET_FILTERS = "RESET_FILTERS"
+export const ERROR = "ERROR"
+export const CLEAR_ERROR = "CLEAR_ERROR"
 
 export const getAllPokemons = () => {
     return async function(dispatch){
@@ -23,7 +25,9 @@ export const getAllPokemons = () => {
             })
         })
         .catch((error) => { 
-            console.log(error);
+            dispatch({
+                type: ERROR,
+            })
         })
 
     }
@@ -38,6 +42,11 @@ export const getAllNames = () => {
                 payload: pokemonNames.data
             })
         })
+        .catch((error) => {
+            dispatch({
+                type: ERROR,
+            })
+        })
     }
 }
 
@@ -50,8 +59,10 @@ export const getPokemonById = (id) => {
                 payload: pokemon.data
             })
         })
-        .catch((error) =>{
-            console.log(error);
+        .catch((error) => {
+            dispatch({
+                type: ERROR,
+            })
         })
     }
 }
@@ -66,7 +77,9 @@ export const getPokemonByName = (name) => {
             })
         })
         .catch((error) => {
-            console.log(error);
+            dispatch({
+                type: ERROR,
+            })
         })
     }
 }
@@ -81,19 +94,36 @@ export const getTypes = () => {
             })
         })
         .catch((error) => {
-            console.log(error);
+            dispatch({
+                type: ERROR,
+            })
         })
     }
 }
 
 export const createPokemon = (data) => {
-    return async function(){
+    return async function(dispatch){
         await axios.post(`/pokemons/create`,{data})
         .catch((error) => {
-            console.log(error);
+            dispatch({
+                type: ERROR,
+            })
+        })
+        
+    }
+}
+
+export const editPokemon = (id, data) => {
+    return async function(dispatch){
+        await axios.put(`/pokemons/edit/${id}`, {data})
+        .catch((error) => {
+            dispatch({
+                type: ERROR
+            })
         })
     }
 }
+
 export const clearDetail = () => {
     return {
         type: CLEAR_DETAILS
@@ -119,10 +149,20 @@ export const resetFilters = () => {
 
 
 export const deletePokemon = (id) => {
-    return async function(){
+    return async function(dispatch){
         await axios.delete(`/pokemons/delete/${id}`)
         .catch((error) => {
-            console.log(error);
+            dispatch({
+                type: ERROR,
+            })
+        })
+    }
+}
+
+export const clearError = () => {
+    return function(dispatch){
+        dispatch({
+            type: CLEAR_ERROR
         })
     }
 }

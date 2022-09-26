@@ -8,7 +8,7 @@ async function getPokemonsAPI () {
     // al resultado le hace un map donde llama otra vez a la api pero ahora a los detalles de cada pokemon
     // y por ultimo retorna un objeto con los datos necesarios de cada uno
     let pokemonsAPI = 
-    await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=2000')
+    await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=800')
     .then((resultAPI) => {
         return(
             Promise.all(resultAPI.data.results.map(async(elem)=>{
@@ -23,7 +23,7 @@ async function getPokemonsAPI () {
                     types: details.data.types.map((type) => type.type.name),
                     height: details.data.height,
                     weight: details.data.weight,
-                    img: details.data.sprites.other.home.front_default || details.data.sprites.other.official-artwork
+                    img: details.data.sprites.other.home.front_default || details.data.sprites.other.official-artwork || null
                 }
             }))
             .catch((error) => {throw error})
