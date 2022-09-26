@@ -2,3 +2,9 @@
     aspect-ratio: 1/1;
     width: 20%;
 }
+
+.details button{
+    border-radius: 7px;
+    padding: 7px;
+    background-color: red;
+}
