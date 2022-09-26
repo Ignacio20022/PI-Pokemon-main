@@ -13,7 +13,7 @@ router.get('/', async(req,res) => {
             const allPokes = await getAllPokemons()
             res.status(200).send(allPokes)
         } catch (error) {
-            res.status(404).send(error)
+            res.status(404).send({error})
         }
     }
     // En cambio si existe name el usuario busco por query
@@ -22,7 +22,7 @@ router.get('/', async(req,res) => {
             const pokemon = await getPokemonByName(name)
             res.status(200).send(pokemon)
         } catch (error) {
-            res.status(404).json(error)
+            res.status(404).send({error})
         }
     }
     
@@ -33,23 +33,23 @@ router.get("/names", async(req, res) => {
         const allPokesName = await getAllPokemonsNames()
         res.status(200).send(allPokesName)
     } catch (error) {
-        res.status(404).send(error)
+        res.status(404).send({error})
     }
 })
 
 router.post('/create', async(req, res) => {
-    const {id, name} = req.body.data
-    const {types} = req.body.data
+    const {id, name} = req.body
+    const {types} = req.body
     
     try {    
-        if(id) throw new Error ('No debes enviar una id')
-        if(!name) throw new Error ('Debes agregar un nombre')
-        if(types.length > 2) throw new Error ('Solo se pueden elegir 2 tipos como maximo')
+        if(id) return res.status(404).send({error: 'No debes enviar una id'})
+        if(!name) return res.status(404).send({error: 'Debes agregar un nombre'})
+        if(types.length > 2) return res.status(404).send({error: 'Solo se pueden elegir 2 tipos como maximo'})
         
         
         const existingTypes = await Type.count()
         
-        if(existingTypes === 0) throw new Error ('Se deben agregar tipos primero')
+        if(existingTypes === 0) return res.status(404).send({error: 'Se deben agregar tipos primero'})
         
         req.body.data.id = incrementalIdPokemons()  
         let poke = await Pokemon.create(req.body.data)
@@ -71,32 +71,18 @@ router.post('/create', async(req, res) => {
         
         res.status(201).send(poke)
     } catch (error) {
-        if(error.parent) return res.status(400).json({error: error.parent.detail}) //En caso de que el tipo asignado no se encuentre
+        if(error.parent) return res.status(404).send({error: error.parent.detail}) //En caso de que el tipo asignado no se encuentre
         
         return res.status(400).send({error})
     }
 })
-    
-//! Creacion bulk de pokemons para tests manuales
-router.post('/bulkcreate', (req,res) => {
-    
-    req.body.forEach(element => {
-        element.id = autoIncrementId().next().value
-        Pokemon.create(element)
-    }); 
-    return res.send('ok')
-})
 
 router.get('/details/:idPokemon', async(req,res) => {
     let {idPokemon} = req.params
-    // if(idPokemon === 'create'){
-    //     createPokemon()
-    //     return
-    // }
 
     idPokemon = parseInt(idPokemon)
 
-    // if(isNaN(idPokemon)) throw ('Debes ingresar un numero')
+    if(isNaN(idPokemon)) return res.status(404).send({error: 'Se deben escribir numeros'})
 
     try {
         const pokemon = await getPokemonByID(idPokemon)
@@ -119,10 +105,10 @@ router.delete('/delete/:idPokemon', async(req,res) => {
         })
         .then((data) =>  {
             if(data === 1) return res.status(200).send('Pokemon eliminado con exito')
-            else return res.status(400).send('El pokemon a eliminar no existe')
+            else return res.status(400).send({error:'El pokemon a eliminar no existe'})
         })
     } catch (error) {
-        res.send({msg: 'Error inesperado', error})
+        return res.status(404).send({error})
     }
 })
 
