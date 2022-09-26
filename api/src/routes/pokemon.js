@@ -38,8 +38,8 @@ router.get("/names", async(req, res) => {
 })
 
 router.post('/create', async(req, res) => {
-    const {id, name} = req.body
-    const {types} = req.body
+    const {id, name} = req.body.data
+    const {types} = req.body.data
     
     try {    
         if(id) return res.status(404).send({error: 'No debes enviar una id'})
@@ -82,7 +82,7 @@ router.get('/details/:idPokemon', async(req,res) => {
 
     idPokemon = parseInt(idPokemon)
 
-    if(isNaN(idPokemon)) return res.status(404).send({error: 'Se deben escribir numeros'})
+    if(isNaN(idPokemon)) return res.status(404).send({error: 'ID de pokemon invalido'})
 
     try {
         const pokemon = await getPokemonByID(idPokemon)
@@ -90,6 +90,15 @@ router.get('/details/:idPokemon', async(req,res) => {
     } catch (error) {
         res.status(404).send({error})
     }
+})
+
+router.put('/edit/:idPokemon', (req, res) => {
+    let {idPokemon} = req.params
+
+    idPokemon = parseInt(idPokemon)
+
+    if(isNaN(idPokemon)) return res.status(404).send({error: 'ID de pokemon invalido'})
+
 })
 
 

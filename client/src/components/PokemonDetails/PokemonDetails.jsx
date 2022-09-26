@@ -25,6 +25,12 @@ export default function PokemonDetail(props) {
 
     id = parseInt(id)
 
+    const handleDelete = (event) => {
+        dispatch(actions.deletePokemon(pokemon.id))
+        alert("pokemon delete succesfully")
+    }
+
+    //check if there was an error
     if (error) {
         return <Error/>
     }
@@ -55,6 +61,8 @@ export default function PokemonDetail(props) {
                     HEIGHT:{pokemon.height > 1 ? pokemon.height : 'Unknown'}{" - "}
                     WEIGHT: {pokemon.weight > 1 ? pokemon.weight : 'Unknown'}
                 </h4>
+                <br></br>
+                <button hidden={pokemon.id < 20000} onClick={handleDelete}>Delete Pokemon</button>
             </div>
             </>
         );

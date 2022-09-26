@@ -98,108 +98,111 @@ export default function CreatePokemon() {
             <div className={style.box}>
                 <div className={style.form}>
                     <h4>Name and stats</h4>
-                    <form
+                    <form className={style.form2}
                         onSubmit={handleSubmit}
                         autoComplete='off'
                         spellCheck="false"
                     >
-                        <label>Name: </label>
-                        <br></br>
-                        <input
-                            type='text'
-                            name='name'
-                            value={state.name}
-                            onChange={handleInputs}
-                        />
-                        <label className={style.errors}>{errors.name}</label>
-                        <br></br>
-                        <br></br>
+                    <div>
+                        <div>
+                            <label>Name: </label>
+                            <input
+                                type='text'
+                                name='name'
+                                value={state.name}
+                                onChange={handleInputs}
+                            />
+                            <label className={style.errors}>{errors.name}</label>
+                        </div>
 
-                        <label>Health: </label>
-                        <br></br>
-                        <input
-                            type='number'
-                            name='hp'
-                            value={state.hp}
-                            onChange={handleInputs}
-                        />
-                        <label className={style.errors}>{errors.hp}</label>
-                        <br></br>
-                        <br></br>
+                        <div>
+                            <label>Health: </label>
+                            <input
+                                type='number'
+                                name='hp'
+                                value={state.hp}
+                                onChange={handleInputs}
+                            />
+                            <label className={style.errors}>{errors.hp}</label>
+                        </div>
+                    </div>
 
-                        <label>Attack: </label>
-                        <br></br>
-                        <input
-                            type='number'
-                            name='attk'
-                            value={state.attk}
-                            onChange={handleInputs}
-                        />
-                        <label className={style.errors}>{errors.attk}</label>
-                        <br></br>
-                        <br></br>
+                    <div>
+                        <div>
+                            <label>Attack: </label>
+                            <input
+                                type='number'
+                                name='attk'
+                                value={state.attk}
+                                onChange={handleInputs}
+                            />
+                            <label className={style.errors}>{errors.attk}</label>
+                        </div>
 
-                        <label>Defense: </label>
-                        <br></br>
-                        <input
-                            type='number'
-                            name='def'
-                            value={state.def}
-                            onChange={handleInputs}
-                        />
-                        <label className={style.errors}>{errors.def}</label>
-                        <br></br>
-                        <br></br>
+                        <div>
+                            <label>Defense: </label>
+                            <input
+                                type='number'
+                                name='def'
+                                value={state.def}
+                                onChange={handleInputs}
+                            />
+                            <label className={style.errors}>{errors.def}</label>
+                        </div>
+                    </div>
 
-                        <label>Speed: </label>
-                        <br></br>
-                        <input
-                            type='number'
-                            name='speed'
-                            value={state.speed}
-                            onChange={handleInputs}
-                        />
-                        <label className={style.errors}>{errors.speed}</label>
-                        <br></br>
-                        <br></br>
+                    <div>
+                        <div>
+                            <label>Speed: </label>
+                            <input
+                                type='number'
+                                name='speed'
+                                value={state.speed}
+                                onChange={handleInputs}
+                            />
+                            <label className={style.errors}>{errors.speed}</label>
+                        </div>
 
-                        <label>Height: </label>
-                        <br></br>
-                        <input
-                            type='number'
-                            name='height'
-                            value={state.height}
-                            onChange={handleInputs}
-                        />
-                        <label className={style.errors}>{errors.height}</label>
-                        <br></br>
-                        <br></br>
+                        <div>
+                            <label>Height: </label>
+                            <input
+                                type='number'
+                                name='height'
+                                value={state.height}
+                                onChange={handleInputs}
+                            />
+                            <label className={style.errors}>{errors.height}</label>
+                        </div>
+                    </div>
 
-                        <label>weight: </label>
-                        <br></br>
-                        <input
-                            type='number'
-                            name='weight'
-                            value={state.weight}
-                            onChange={handleInputs}
-                        />
-                        <label className={style.errors}>{errors.weight}</label>
-                        <br></br>
-                        <br></br>
+                    <div>
+                        <div>
+                            <label>weight: </label>
+                            <input
+                                type='number'
+                                name='weight'
+                                value={state.weight}
+                                onChange={handleInputs}
+                            />
+                            <label className={style.errors}>{errors.weight}</label>
+                        </div>
 
-                        <label>Image: (url)</label>
-                        <br></br>
-                        <input
-                            type='text'
-                            name='img'
-                            value={state.img}
-                            onChange={handleInputs}
-                        />
-                        <label className={style.errors}>{errors.img}</label>
-                        <br></br>
-                        <br></br>
+                        <div>
+                            <label>Image: (url)</label>
+ 
+                            <input
+                                type='text'
+                                name='img'
+                                value={state.img}
+                                onChange={handleInputs}
+                            />
+                            <label className={style.errors}>{errors.img}</label>
+                        </div>
+                    </div>
+
 
                         <button
+                            className={style.button}
                             type='submit'
                             disabled={
                                 Object.keys(errors).length || state.name === ""
@@ -215,7 +218,6 @@ export default function CreatePokemon() {
                     <ul>
                         {types?.map((type, index) => (
                             <li className={style.lista2} key={type.id}>
-                                <div>
                                     <input
                                         key={index}
                                         type='checkbox'
@@ -233,7 +235,6 @@ export default function CreatePokemon() {
                                         {type.name}
                                     </label>
                                     <br></br>
-                                </div>
                             </li>
                         ))}
                     </ul>

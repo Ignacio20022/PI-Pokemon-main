@@ -112,6 +112,18 @@ export const createPokemon = (data) => {
         
     }
 }
+
+export const editPokemon = (id, data) => {
+    return async function(dispatch){
+        await axios.put(`/pokemons/edit/${id}`, {data})
+        .catch((error) => {
+            dispatch({
+                type: ERROR
+            })
+        })
+    }
+}
+
 export const clearDetail = () => {
     return {
         type: CLEAR_DETAILS

@@ -4,6 +4,8 @@ const session = require('supertest-session');
 const app = require('../../src/app.js');
 const { Pokemon, conn } = require('../../src/db.js');
 
+const request = require('supertest');
+
 const agent = session(app);
 const pokemon = {
   id: 1,
@@ -18,10 +20,10 @@ describe('Pokemon routes', function() {
   beforeEach(() => Pokemon.sync({ force: true })
     .then(() => Pokemon.create(pokemon)));
   describe('GET /pokemons', function() {
-      it('should get 200', async(done) => {
-      const res = await agent.get('/pokemons')
-      expect(res.status).to.equal(200)
+      it('should get 200', (done) => {
+      agent.get('/pokemons')
+      .expect(200)
       }
-    ).timeout(5000)
+    ).timeout(10000)
   });
 });

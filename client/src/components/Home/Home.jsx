@@ -64,27 +64,19 @@ export default function Home() {
 
     if (filteredPokemons.length > 0) pokemons = filteredPokemons;
 
-    if (search.length > 0 && pokemons[0] !== 0 && pokemons[0] !== 1) {
-        pokemons = pokemons.filter((pokemon) => {
-            if (
-                pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
-                pokemon.name.includes(search)
-            )
-                return pokemon;
-            else return null;
-        });
-    }
+
 
     const lastPostIndex = currentPage * postsPerPage;
     const firstPostIndex = lastPostIndex - postsPerPage;
-    const currentPokemons = pokemons.slice(firstPostIndex, lastPostIndex);
 
     useEffect(() => {
         dispatch(actions.clearError())
-        if (!pokemons.length) dispatch(actions.getAllPokemons());
-        if (!types.length) dispatch(actions.getTypes());
+        if(!pokemons.length) dispatch(actions.getAllPokemons());
+        if(!types.length) dispatch(actions.getTypes());
     }, [dispatch, pokemons.length, types.length]);
+    
 
+    //check if there was an error
     if(error){
         return <Error/>
     }
@@ -92,9 +84,22 @@ export default function Home() {
         return <Loading />;
     }
 
-    let mainComponent = null;
+    let mainComponent = null
 
-    if (currentPokemons[0] !== 'inexistent DB' && currentPokemons[0] !== 'inexistent type') { 
+    if (search.length > 0 && pokemons[0] !== 'inexistent DB' && pokemons[0] !== 'inexistent type') {
+        pokemons = pokemons.filter((pokemon) => {
+            if (
+                pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
+                pokemon.name.includes(search)
+            )
+                return pokemon;
+            else return null
+        });
+    }
+
+    const currentPokemons = pokemons.slice(firstPostIndex, lastPostIndex);
+
+    if (currentPokemons.length && currentPokemons[0] !== 'inexistent DB' && currentPokemons[0] !== 'inexistent type') { 
         mainComponent = 
             currentPokemons.map((pokemon) => {
                 return (         
@@ -107,20 +112,29 @@ export default function Home() {
                     />
                 );
             })
-    } else if (currentPokemons[0] === 'inexistent DB')
+    } 
+    else if (currentPokemons.length && currentPokemons[0] === 'inexistent DB')
         mainComponent = 
-        <>
-            <h1>There are no Pokemons in the Data Base </h1> 
-            <img className={style.sadPoke} src={SadPikachu} alt='pikachu sad'/>
-        </>
-    else if(currentPokemons[0] === 'inexistent type') {
+            <>
+                <h1>There are no Pokemons in the Data Base </h1> 
+                <img className={style.sadPoke} src={SadPikachu} alt='pikachu sad'/>
+            </>
+    else if(currentPokemons.length && currentPokemons[0] === 'inexistent type') {
         mainComponent = 
-        <>
-        <h1>No Pokemon exist with that type</h1>;
-        <img className={style.sadPoke} src={SadPikachu} alt='pikachu sad'/>
-        </>
+            <>
+                <h1>No Pokemon exist with that type</h1>
+                <img className={style.sadPoke} src={SadPikachu} alt='pikachu sad'/>
+            </>
     }
-
+    else{
+        mainComponent = 
+            <>
+                <h1>No pokemon has '{search}' in the name</h1>
+                <img className={style.sadPoke} src={SadPikachu} alt='pikachu sad'/>
+            </>
+    }
+    
+    
     const filtersButtons = (
         <div className={style.sortsContainer}>
             <select
