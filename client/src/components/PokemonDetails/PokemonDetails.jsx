@@ -4,9 +4,21 @@ import * as actions from "../../redux/actions/index";
 import * as ReactRedux from "react-redux";
 
 import style from "./PokemonDetails.module.css";
+// import NotFound from '../NotFound/NotFound'
 
 export default function PokemonDetail(props) {
-    const { id } = useParams();
+    let { id } = useParams();
+
+    id = parseInt(id)
+
+    let render = null
+
+    useEffect(() => {
+        if(isNaN(id)){
+            alert('Ingrese un numero')
+        }
+    },[id])
+
 
     const pokemon = ReactRedux.useSelector((state) => state.pokemonDetails);
 
@@ -25,7 +37,8 @@ export default function PokemonDetail(props) {
                 <h1>cargando</h1>
             </div>
         );
-    } else {
+    }
+    else {
         return (
             <div className={style.details}>
                 <h2>{pokemon.id}</h2>

@@ -75,7 +75,7 @@ const rootReducer = (state = initialState, action) => {
             if(API_or_DB === 'API') filtered = state.pokemons.filter((pokemon) => pokemon.id < 20000)
             if(API_or_DB === 'DB') {
                 filtered = filtered.filter((pokemon) => pokemon.id > 20000)
-                if(!filtered.length) filtered[0] = 0
+                if(!filtered.length) filtered[0] = 'inexistent DB'
             }
             
             if(sortBy === "A-Z"){
@@ -94,9 +94,9 @@ const rootReducer = (state = initialState, action) => {
             }
 
 
-            if(types !== 'default' && filtered[0] !== 0) {
+            if(types !== 'default' && filtered[0] !== 'inexistent DB') {
                 filtered = filtered.filter((pokemon) => pokemon.types.includes(types))
-                if(!filtered.length) filtered[0] = 1
+                if(!filtered.length) filtered[0] = 'inexistent type'
             }
             return{
                 ...state,

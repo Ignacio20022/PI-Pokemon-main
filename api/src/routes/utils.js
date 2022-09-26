@@ -8,7 +8,7 @@ async function getPokemonsAPI () {
     // al resultado le hace un map donde llama otra vez a la api pero ahora a los detalles de cada pokemon
     // y por ultimo retorna un objeto con los datos necesarios de cada uno
     let pokemonsAPI = 
-    await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=500')
+    await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=2000')
     .then((resultAPI) => {
         return(
             Promise.all(resultAPI.data.results.map(async(elem)=>{

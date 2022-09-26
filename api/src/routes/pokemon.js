@@ -71,7 +71,6 @@ router.post('/create', async(req, res) => {
         
         res.status(201).send(poke)
     } catch (error) {
-        console.log(error);
         if(error.parent) return res.status(400).json({error: error.parent.detail}) //En caso de que el tipo asignado no se encuentre
         
         return res.status(400).send({error})
@@ -97,14 +96,13 @@ router.get('/details/:idPokemon', async(req,res) => {
 
     idPokemon = parseInt(idPokemon)
 
-    if(isNaN(idPokemon)) throw new Error('Debes ingresar un numero')
+    // if(isNaN(idPokemon)) throw ('Debes ingresar un numero')
 
     try {
         const pokemon = await getPokemonByID(idPokemon)
         res.status(200).send(pokemon)
     } catch (error) {
-        console.log(error);
-        res.redirect('/pokemons')
+        res.status(404).send({error})
     }
 })
 

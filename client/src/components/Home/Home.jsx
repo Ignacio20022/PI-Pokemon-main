@@ -21,10 +21,10 @@ export default function Home() {
         sortBy: "default",
         API_or_DB: "default",
         types: "default",
-    });
+    })
 
     const handleAllFilters = (event) => {
-        event.preventDefault()
+        event.preventDefault();
         setFilters({
             ...filters,
             [event.target.name]: event.target.value,
@@ -44,7 +44,7 @@ export default function Home() {
             API_or_DB: "default",
             types: "default",
         });
-        setSearch("")
+        setSearch("");
         setCurrentPage(1);
         setMinLimit(0);
         setMaxLimit(10);
@@ -79,16 +79,88 @@ export default function Home() {
     useEffect(() => {
         if (!pokemons.length) dispatch(actions.getAllPokemons());
         if (!types.length) dispatch(actions.getTypes());
-    }, [dispatch, pokemons.length]);
+    }, [dispatch, pokemons.length, types.length]);
 
     if (!pokemons.length && search === "") {
-        return (
-            <Loading/>
-        );
+        return <Loading />;
     }
 
+    let mainComponent = null;
+
+
+    if (currentPokemons[0] !== 'inexistent DB' && currentPokemons[0] !== 'inexistent type') { 
+        mainComponent = 
+            currentPokemons.map((pokemon) => {
+                return (         
+                    <PokemonCard
+                        key={pokemon.id}
+                        id={pokemon.id}
+                        name={pokemon.name}
+                        types={pokemon.types}
+                        img={pokemon.img}
+                    />
+                );
+            })
+    } else if (currentPokemons[0] === 'inexistent DB')
+        mainComponent = <h1>There are no Pokemons in the Data Base </h1>;
+    else if(currentPokemons[0] === 'inexistent type') mainComponent = <h1>No Pokemon exist with that type</h1>;
+
+    const filtersButtons = (
+        <div className={style.sortsContainer}>
+            <select
+                name='sortBy'
+                value={filters.sortBy}
+                className={style.sorts}
+                onChange={handleAllFilters}
+            >
+                <option hidden value='default'>
+                    Sort by...
+                </option>
+                <option value='default'>By default</option>
+                <option value='A-Z'>A-Z</option>
+                <option value='Z-A'>Z-A</option>
+            </select>
+
+            <select
+                name='API_or_DB'
+                value={filters.API_or_DB}
+                className={style.pokesFrom}
+                onChange={handleAllFilters}
+            >
+                <option hidden value='default'>
+                    Show pokemons from...
+                </option>
+                <option value='default'> By default</option>
+                <option value='API'>Poke API</option>
+                <option value='DB'>Data Base</option>
+            </select>
+
+            <select
+                name='types'
+                value={filters.types}
+                className={style.sorts}
+                onChange={handleAllFilters}
+            >
+                <option hidden value='default'>
+                    Types...
+                </option>
+                <option value='default'>By default</option>
+                {types.map((type, index) => {
+                    return (
+                        <option key={index} value={type.name}>
+                            {type.name}
+                        </option>
+                    );
+                })}
+            </select>
+            <br></br>
+
+            <button onClick={resetFilters}>Reset filters</button>
+        </div>
+    );
+
     return (
-        <>
+        <div>
             <Navbar
                 search={search}
                 setSearch={setSearch}
@@ -99,76 +171,13 @@ export default function Home() {
                 setPageLimit={setPageLimit}
             />
 
-            <div className={style.sortsContainer}>
-                <select
-                    name='sortBy'
-                    value={filters.sortBy}
-                    className={style.sorts}
-                    onChange={handleAllFilters}
-                >
-                    <option hidden value='default'>
-                        Sort by...
-                    </option>
-                    <option value='default'>By default</option>
-                    <option value='A-Z'>A-Z</option>
-                    <option value='Z-A'>Z-A</option>
-                </select>
+            {filtersButtons}
 
-                <select
-                    name='API_or_DB'
-                    value={filters.API_or_DB}
-                    className={style.pokesFrom}
-                    onChange={handleAllFilters}
-                >
-                    <option hidden value='default'>
-                        Show pokemons from...
-                    </option>
-                    <option value='default'> By default</option>
-                    <option value='API'>Poke API</option>
-                    <option value='DB'>Data Base</option>
-                </select>
-
-                <select
-                    name='types'
-                    value={filters.types}
-                    className={style.sorts}
-                    onChange={handleAllFilters}
-                >
-                    <option hidden value='default'>
-                        Types...
-                    </option>
-                    <option value='default'>By default</option>
-                    {types.map((type, index) => {
-                        return (
-                            <option key={index} value={type.name}>
-                                {type.name}
-                            </option>
-                        );
-                    })}
-                </select>
-                <br></br>
-
-                <button onClick={resetFilters}>Reset filters</button>
-            </div>
             <h1 className={style.title}>Pokemons</h1>
+
             <div className={style.home}>
-                {currentPokemons[0] !== 0 && currentPokemons[0] !== 1 ? (
-                    currentPokemons.map((pokemon) => {
-                        return (
-                            <PokemonCard
-                                key={pokemon.id}
-                                id={pokemon.id}
-                                name={pokemon.name}
-                                types={pokemon.types}
-                                img={pokemon.img}
-                            />
-                        );
-                    })
-                ) : currentPokemons[0] === 0 ? (
-                    <h1>There are no Pokemons in the Data Base </h1>
-                ) : (
-                    <h1>No Pokemon exist with that type</h1>
-                )}
+
+                {mainComponent}
 
                 <Pagination
                     totalPosts={pokemons.length}
@@ -190,6 +199,6 @@ export default function Home() {
             <br></br>
             <br></br>
             <br></br>
-        </>
+        </div>
     );
 }

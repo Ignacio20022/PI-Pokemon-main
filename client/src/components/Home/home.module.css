@@ -36,13 +36,12 @@ body{
     /* display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-items: center;
-    align-items: center;
-    display: flex; */
-    /* justify-content: center; */
+    align-items: center; */
+    display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    /* gap: 90px; */
-    row-gap: 200%;
-    /* border: 2px solid red; */
+    gap: 20px;
+    padding: 10px;
 }
 
 /* button{
