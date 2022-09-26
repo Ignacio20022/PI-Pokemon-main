@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../Pagination/Pagination.jsx";
 import Navbar from "../Navbar/HomeNavbar";
 import Loading from "../Loading/Loading";
+import Error from '../Error/Error'
+import SadPikachu from '../../assets/pikachu sad.png'
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -14,6 +16,7 @@ export default function Home() {
     let pokemons = useSelector((state) => state.pokemons);
     const filteredPokemons = useSelector((state) => state.filteredPokemons);
     const types = useSelector((state) => state.types);
+    const error = useSelector((state) => state.error)
 
     const [search, setSearch] = useState("");
 
@@ -77,16 +80,19 @@ export default function Home() {
     const currentPokemons = pokemons.slice(firstPostIndex, lastPostIndex);
 
     useEffect(() => {
+        dispatch(actions.clearError())
         if (!pokemons.length) dispatch(actions.getAllPokemons());
         if (!types.length) dispatch(actions.getTypes());
     }, [dispatch, pokemons.length, types.length]);
 
-    if (!pokemons.length && search === "") {
+    if(error){
+        return <Error/>
+    }
+    else if (!pokemons.length && search === "" && error === false) {
         return <Loading />;
     }
 
     let mainComponent = null;
-
 
     if (currentPokemons[0] !== 'inexistent DB' && currentPokemons[0] !== 'inexistent type') { 
         mainComponent = 
@@ -102,8 +108,18 @@ export default function Home() {
                 );
             })
     } else if (currentPokemons[0] === 'inexistent DB')
-        mainComponent = <h1>There are no Pokemons in the Data Base </h1>;
-    else if(currentPokemons[0] === 'inexistent type') mainComponent = <h1>No Pokemon exist with that type</h1>;
+        mainComponent = 
+        <>
+            <h1>There are no Pokemons in the Data Base </h1> 
+            <img className={style.sadPoke} src={SadPikachu} alt='pikachu sad'/>
+        </>
+    else if(currentPokemons[0] === 'inexistent type') {
+        mainComponent = 
+        <>
+        <h1>No Pokemon exist with that type</h1>;
+        <img className={style.sadPoke} src={SadPikachu} alt='pikachu sad'/>
+        </>
+    }
 
     const filtersButtons = (
         <div className={style.sortsContainer}>
@@ -116,7 +132,7 @@ export default function Home() {
                 <option hidden value='default'>
                     Sort by...
                 </option>
-                <option value='default'>By default</option>
+                {/* <option value='default'>By default</option> */}
                 <option value='A-Z'>A-Z</option>
                 <option value='Z-A'>Z-A</option>
             </select>
@@ -130,7 +146,7 @@ export default function Home() {
                 <option hidden value='default'>
                     Show pokemons from...
                 </option>
-                <option value='default'> By default</option>
+                {/* <option value='default'> By default</option> */}
                 <option value='API'>Poke API</option>
                 <option value='DB'>Data Base</option>
             </select>
@@ -144,7 +160,7 @@ export default function Home() {
                 <option hidden value='default'>
                     Types...
                 </option>
-                <option value='default'>By default</option>
+                {/* <option value='default'>By default</option> */}
                 {types.map((type, index) => {
                     return (
                         <option key={index} value={type.name}>

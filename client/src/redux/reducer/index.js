@@ -8,7 +8,9 @@ import {
     DELETE_POKEMON,
     CLEAR_DETAILS,
     FILTER_POKEMONS,
-    RESET_FILTERS
+    RESET_FILTERS,
+    ERROR,
+    CLEAR_ERROR
 } from "../actions";
 
 const initialState = {
@@ -17,7 +19,7 @@ const initialState = {
     filteredPokemons: [],
     pokemonsNames:[],
     types: [],
-    // error: [],
+    errors: false,
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -25,50 +27,55 @@ const rootReducer = (state = initialState, action) => {
         case GET_ALL_POKEMONS:
             return {
                 ...state,
+                errors: false,
                 pokemons: action.payload
             }
         case GET_ALL_POKEMONS_NAMES:
             return {
                 ...state,
+                errors: false,
                 pokemonsNames: action.payload
             }
         case GET_POKEMON_BY_ID:
             return{
                 ...state,
+                errors: false,
                 pokemonDetails: action.payload
             }
         // case GET_POKEMON_BY_NAME:
         //     return{
         //         ...state,
+        //         errors: false,
         //         filteredPokemons: [action.payload]
         //     }
         case GET_TYPES:
             return{
                 ...state,
+                errors: false,
                 types: action.payload
             }
         case CREATE_POKEMON:
             return{
                 ...state,
+                errors: false,
                 pokemons: state.pokemons.concat(action.payload)
             }
         case DELETE_POKEMON:
             return{
                 ...state,
+                errors: false,
                 pokemons: state.pokemons.filter((pokemon) => pokemon.id !== action.payload)
             }    
         case CLEAR_DETAILS:
             return{
                 ...state,
+                errors: false,
                 pokemonDetails: {}
             }
         case FILTER_POKEMONS:
             const {sortBy, API_or_DB, types} = action.payload
 
             let filtered = []
-
-            // if(!state.filteredPokemons.length) filtered = state.pokemons.slice()
-            // else filtered = state.filteredPokemons
 
             filtered = state.pokemons.slice()
 
@@ -100,18 +107,25 @@ const rootReducer = (state = initialState, action) => {
             }
             return{
                 ...state,
+                errors: false,
                 filteredPokemons: filtered
             }
         case RESET_FILTERS:
             return{
                 ...state,
+                errors: false,
                 filteredPokemons: []
             }
-        // case ERROR:
-        //     return{
-        //         ...state,
-        //         error: action.payload
-        //     }
+        case ERROR:
+            return{
+                ...state,
+                error: true
+            }
+        case CLEAR_ERROR:
+            return{
+                ...state,
+                error: false
+            }
         default:
             return state
     }

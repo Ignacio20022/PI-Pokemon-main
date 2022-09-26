@@ -3,12 +3,12 @@ export function validateInputs(input, pokemonsNames) {
 
     if(!input.name) errors.name = 'Name is required'
     else if(input.name.length < 3) errors.name = 'Name has to have 3 or more characters'
-    else if(input.name.length > 99) errors.name = `Name can't be longer than 12 characters`
-    else if(!/^[a-zA-Z0-9. -]*$/.test(input.name)) errors.name = 'Name contains invalid characters'
+    else if(input.name.length > 12) errors.name = `Name can't be longer than 12 characters`
+    else if(!(/(^[a-zA-Z0-9. -])*$/g).test(input.name)) errors.name = 'Name contains invalid characters'
     else {
         pokemonsNames.map((name) =>{
-            if(name.toLowerCase() === input.name.toLowerCase()){
-                errors.name = `${input.name} is already in use`
+            if(name.toLowerCase() === input.name.toLowerCase().trim()){
+                return errors.name = `${input.name} is already in use`
             }
             else return null
         })

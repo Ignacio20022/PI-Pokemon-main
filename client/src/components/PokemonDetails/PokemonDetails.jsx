@@ -4,42 +4,39 @@ import * as actions from "../../redux/actions/index";
 import * as ReactRedux from "react-redux";
 
 import style from "./PokemonDetails.module.css";
-// import NotFound from '../NotFound/NotFound'
+import Loading from "../Loading/Loading";
+import Error from "../Error/Error";
+import NavbarNoSearch from "../Navbar/Navbar";
 
 export default function PokemonDetail(props) {
     let { id } = useParams();
 
-    id = parseInt(id)
-
-    let render = null
-
-    useEffect(() => {
-        if(isNaN(id)){
-            alert('Ingrese un numero')
-        }
-    },[id])
-
-
     const pokemon = ReactRedux.useSelector((state) => state.pokemonDetails);
-
+    const error = ReactRedux.useSelector((state) => state.error)
     const dispatch = ReactRedux.useDispatch();
 
     useEffect(() => {
+        dispatch(actions.clearError())
         dispatch(actions.getPokemonById(id));
         return () => {
             dispatch(actions.clearDetail());
         };
     }, [dispatch, id]);
 
-    if (!Object.keys(pokemon).length) {
+    id = parseInt(id)
+
+    if (error) {
+        return <Error/>
+    }
+    else if (!Object.keys(pokemon).length){
         return (
-            <div>
-                <h1>cargando</h1>
-            </div>
-        );
+            <Loading/>
+        )
     }
     else {
         return (
+            <>
+            <NavbarNoSearch/>
             <div className={style.details}>
                 <h2>{pokemon.id}</h2>
                 <h1>{pokemon.name.toUpperCase()}</h1>
@@ -59,6 +56,7 @@ export default function PokemonDetail(props) {
                     WEIGHT: {pokemon.weight > 1 ? pokemon.weight : 'Unknown'}
                 </h4>
             </div>
+            </>
         );
     }
 }

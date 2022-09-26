@@ -14,6 +14,11 @@ describe('Pokemon model', () => {
           .then(() => done(new Error('It requires a valid name')))
           .catch(() => done());
       });
+      it('should throw an error if name is empty', (done) => {
+        Pokemon.create({name: ''})
+            .then(() => done(new Error('It requires a name')))
+            .catch(() => done())
+      })
       it('should work when its a valid name', () => {
         Pokemon.create({ name: 'Pikachu' });
       });

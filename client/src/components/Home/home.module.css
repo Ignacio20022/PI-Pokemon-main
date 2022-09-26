@@ -31,6 +31,15 @@ body{
     height: 40px;
 }
 
+.sadPoke{
+    position: fixed;
+    width: 65%;
+    padding-top: 100px ;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
 
 .home{
     /* display: grid;
@@ -48,3 +57,7 @@ body{
     float: left;
     transform: rotate(90deg);
 } */
+
+.error{
+    justify-content: end;
+}

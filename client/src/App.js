@@ -13,33 +13,32 @@ function App() {
 
     return (
         <div className="App">
-            <Switch>
-            <Route exact path='/'>
-                <Landing />
-            </Route>
-            <Route exact path='/pokemons'>
-                <Home />
-            </Route>
-            <Route exact path='/pokemons/details/:id'>                
-                <Navbar/>
-                <PokemonDetails />
-            </Route>
-            {/* <Route exact path={`/pokemons?name=${name}`}>
-                <PokemonDetails />
-            </Route> */}
-            <Route exact path='/pokemons/create'>
-                <Navbar/>
-                <CreatePokemon />
-            </Route>
-            <Route exact path='/pokemon/delete/:id'>
-                <Navbar/>
-            </Route>
-            <Route path='*'>
-                <Navbar/>
-                <NotFound />
-            </Route>
 
+            <Switch>
+                <Route exact path='/'>
+                    <Landing />
+                </Route>
+                <Route exact path='/pokemons'>
+                    <Home />
+                </Route>
+                <Route exact path='/pokemons/details/:id'>                
+                    <PokemonDetails />
+                </Route>
+                {/* <Route exact path={`/pokemons?name=${name}`}>
+                    <PokemonDetails />
+                </Route> */}
+                <Route exact path='/pokemons/create'>
+                    <CreatePokemon />
+                </Route>
+                <Route exact path='/pokemon/delete/:id'>
+                    <Navbar/>
+                </Route>
+                <Route path='*'>
+                    <Navbar/>
+                    <NotFound />
+                </Route>
             </Switch>
+
         </div>
     );
 }
