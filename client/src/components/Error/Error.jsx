@@ -5,7 +5,7 @@ export default function Error(){
     return(
         <div>
             <NavbarNoSearch/>
-            <h1>unexpected error happened</h1>
+            <h1>Unexpected error happened</h1>
         </div> 
     )
 }

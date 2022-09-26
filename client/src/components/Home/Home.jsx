@@ -8,7 +8,7 @@ import Pagination from "../Pagination/Pagination.jsx";
 import Navbar from "../Navbar/HomeNavbar";
 import Loading from "../Loading/Loading";
 import Error from '../Error/Error'
-import SadPikachu from '../../assets/pikachu sad.png'
+import SadPikachu from '../../assets/sad_pikachu.png'
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -97,6 +97,7 @@ export default function Home() {
         });
     }
 
+    //pagination
     const currentPokemons = pokemons.slice(firstPostIndex, lastPostIndex);
 
     if (currentPokemons.length && currentPokemons[0] !== 'inexistent DB' && currentPokemons[0] !== 'inexistent type') { 
@@ -129,7 +130,7 @@ export default function Home() {
     else{
         mainComponent = 
             <>
-                <h1>No pokemon has '{search}' in the name</h1>
+                <h1>No pokemon has '{search}' in their name</h1>
                 <img className={style.sadPoke} src={SadPikachu} alt='pikachu sad'/>
             </>
     }
