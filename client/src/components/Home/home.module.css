@@ -5,7 +5,6 @@ body{
 .sortsContainer{
     padding-top: 20px;
     height: 90px;
-    /* border: 2px solid red; */
 }
 
 .sortsContainer button{
@@ -35,28 +34,17 @@ body{
     position: fixed;
     width: 65%;
     padding-top: 100px ;
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
+
 }
 
 
 .home{
-    /* display: grid;
-    grid-template-columns: repeat(3,1fr);
-    justify-items: center;
-    align-items: center; */
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
     padding: 10px;
 }
-
-/* button{
-    float: left;
-    transform: rotate(90deg);
-} */
 
 .error{
     justify-content: end;
