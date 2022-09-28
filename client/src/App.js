@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Home from './components/Home/Home.jsx'
 import Landing from './components/Landing/Landing.jsx'
 import PokemonDetails from './components/PokemonDetails/PokemonDetails.jsx'
@@ -13,7 +13,7 @@ function App() {
 
     return (
         <div className="App">
-
+        <BrowserRouter>
             <Switch>
                 <Route exact path='/'>
                     <Landing />
@@ -38,6 +38,7 @@ function App() {
                     <NotFound />
                 </Route>
             </Switch>
+        </BrowserRouter>
 
         </div>
     );
