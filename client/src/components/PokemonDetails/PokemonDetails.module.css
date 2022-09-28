@@ -4,6 +4,10 @@
 }
 
 .details button{
+    margin: 10px;
+}
+
+.deleteBttn{
     border-radius: 7px;
     padding: 7px;
     background-color: rgb(192, 71, 71);
@@ -11,8 +15,22 @@
     color: white;
 }
 
-.details button:hover{
+.deleteBttn:hover{
     background-color: white;
-    color: red;
+    color: rgb(192, 71, 71);
     border-color: rgb(192, 71, 71);
+}
+
+.editBttn{
+    border-radius: 7px;
+    padding: 7px;
+    background-color: rgb(38, 121, 217);
+    font-size: larger;
+    color: white;
+}
+
+.editBttn:hover{
+    background-color: white;
+    color: rgb(38, 121, 217);
+    border-color: rgb(38, 121, 217);
 }

@@ -8,6 +8,7 @@ import './App.css';
 import NotFound from './components/NotFound/NotFound.jsx';
 import CreatePokemon from './components/CreatePokemon/CreatePokemon.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
+import EditPokemon from './components/EditPokemon/EditPokemon.jsx'
 
 function App() {
 
@@ -29,6 +30,9 @@ function App() {
                 </Route> */}
                 <Route exact path='/pokemons/create'>
                     <CreatePokemon />
+                </Route>
+                <Route exact path='/pokemons/edit/:id'>
+                    <EditPokemon />
                 </Route>
                 <Route exact path='/pokemon/delete/:id'>
                     <Navbar/>

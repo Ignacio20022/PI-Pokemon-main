@@ -92,13 +92,52 @@ router.get('/details/:idPokemon', async(req,res) => {
     }
 })
 
-router.put('/edit/:idPokemon', (req, res) => {
+router.put('/edit/:idPokemon', async(req, res) => {
+    console.log(req.body.data);
     let {idPokemon} = req.params
+    const {types} = req.body.data
 
     idPokemon = parseInt(idPokemon)
 
     if(isNaN(idPokemon)) return res.status(404).send({error: 'ID de pokemon invalido'})
 
+    try {
+        let pokemonToEdit = await Pokemon.findOne({
+            where: {id : idPokemon}
+        })
+        pokemonToEdit.name = req.body.data.name
+        pokemonToEdit.hp = req.body.data.hp
+        pokemonToEdit.attk = req.body.data.attk
+        pokemonToEdit.def = req.body.data.def
+        pokemonToEdit.speed = req.body.data.speed
+        pokemonToEdit.height = req.body.data.height
+        pokemonToEdit.weight = req.body.data.weight
+        // pokemonToEdit.img = req.body.data.img
+
+        await pokemonToEdit.save()
+
+        await pokemonToEdit.setTypes(types)
+
+        // pokemonToEdit = await Pokemon.findByPk(idPokemon, {
+        //     include: [{
+        //         model: Type,
+        //         attributes: ['name'],
+        //         through: {
+        //             attributes: []
+        //         }
+        //     }]
+        // })
+        // pokemonToEdit = {
+        //     ...pokemonToEdit.dataValues,
+        //     types: pokemonToEdit.types?.map((type)=> type.name)
+        // }
+
+        res.status(200).send('Pokemon editado con exito')
+
+    } catch (error) {
+        console.log(error);
+        return res.status(404).send({error})
+    }
 })
 
 
