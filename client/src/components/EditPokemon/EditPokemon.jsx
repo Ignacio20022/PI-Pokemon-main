@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import * as actions from "../../redux/actions/index";
 import Error from "../Error/Error";
 import Loading from "../Loading/Loading";
 import NavbarNoSearch from "../Navbar/Navbar";
 
-import style from "./CreatePokemon.module.css";
+import style from "./EditPokemoin.module.css";
 import { validateInputs } from "./Validators";
 
 export default function CreatePokemon() {
+
+    const {id} = useParams()
 
     const error = useSelector((state) => state.error)
 
@@ -78,9 +81,9 @@ export default function CreatePokemon() {
 
     const handleSubmit = (event) => {
         if (!Object.keys(errors).length) {
-            dispatch(actions.createPokemon(state));
+            dispatch(actions.editPokemon(id, state));
 
-            alert("Pokemon created successfully");
+            alert("Pokemon edited successfully");
         } else
             alert(`Please, check " ${Object.keys(errors)} " before submiting`);
     };
@@ -95,7 +98,7 @@ export default function CreatePokemon() {
         return (
             <>
             <NavbarNoSearch/>
-            <h1>Create Pokemon</h1>
+            <h1>Edit pokemon</h1>
             <div className={style.box}>
                 <div className={style.form}>
                     <h4>Name and stats</h4>

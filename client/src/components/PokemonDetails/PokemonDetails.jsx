@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import * as actions from "../../redux/actions/index";
 import * as ReactRedux from "react-redux";
 
@@ -62,7 +62,10 @@ export default function PokemonDetail(props) {
                     WEIGHT: {pokemon.weight > 1 ? pokemon.weight : 'Unknown'}
                 </h4>
                 <br></br>
-                <button hidden={pokemon.id < 20000} onClick={handleDelete}>Delete Pokemon</button>
+                <button className={style.deleteBttn} hidden={pokemon.id < 20000} onClick={handleDelete}>Delete Pokemon</button>
+                <Link to={`/pokemons/edit/${pokemon.id}`}>
+                    <button className={style.editBttn} hidden={pokemon.id < 20000} >Edit Pokemon</button>
+                </Link>
             </div>
             </>
         );

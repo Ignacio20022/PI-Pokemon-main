@@ -8,7 +8,7 @@ export default function Landing() {
             <div>
                 <h1>Pokemon API</h1>
                 <Link to={"/pokemons"}>
-                    <button>Ingresar</button>
+                    <button>Enter</button>
                 </Link>
             </div>
         </div>

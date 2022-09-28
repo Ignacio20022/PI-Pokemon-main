@@ -114,6 +114,8 @@ export const createPokemon = (data) => {
 }
 
 export const editPokemon = (id, data) => {
+    console.log(id);
+    console.log(data);
     return async function(dispatch){
         await axios.put(`/pokemons/edit/${id}`, {data})
         .catch((error) => {
