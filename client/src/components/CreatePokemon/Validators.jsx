@@ -22,7 +22,7 @@ export function validateInputs(input, pokemonsNames) {
     if(input.hp.length === 0) errors.hp = "The health can't be empty (leave 0 if unknown)"
     if(input.hp < 0) errors.hp = "The health can't be negative"
     if(input.hp > 255) errors.hp = "The health can't be higher than 255"
-    if(input.hp.includes(".")) errors.hp = "Float numbers are not allowed"
+    if(input.hp.includes(".")) errors.hp = "Float numbers are not allowed" 
 
     if(input.attk.length === 0) errors.attk = "The attack can't be empty (leave 0 if unknown)"
     if(input.attk < 0) errors.attk = "The attack can't be negative"
