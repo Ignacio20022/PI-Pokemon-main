@@ -99,8 +99,34 @@ const rootReducer = (state = initialState, action) => {
                     return 0;
                 })
             }
-
-
+            if(sortBy === "+ATTK"){
+                filtered.sort((a,b) => {
+                    if(a.attk < b.attk) return 1
+                    if(a.attk > b.attk) return -1
+                    return 0
+                })
+            }
+            if(sortBy === "-ATTK"){
+                filtered.sort((a,b) => {
+                    if(a.attk > b.attk) return 1
+                    if(a.attk < b.attk) return -1
+                    return 0
+                })
+            }
+            if(sortBy === '+HP'){
+                filtered.sort((a,b) => {
+                    if(a.hp < b.hp) return 1
+                    if(a.hp > b.hp) return -1
+                    return 0 
+                })
+            }
+            if(sortBy === '-HP'){
+                filtered.sort((a,b) => {
+                    if(a.hp > b.hp) return 1
+                    if(a.hp < b.hp) return -1
+                    return 0 
+                })
+            }
             if(types !== 'default' && filtered[0] !== 'inexistent DB') {
                 filtered = filtered.filter((pokemon) => pokemon.types.includes(types))
                 if(!filtered.length) filtered[0] = 'inexistent type'
