@@ -150,10 +150,10 @@ export default function Home() {
                 {/* <option value='default'>By default</option> */}
                 <option value='A-Z'>A-Z</option>
                 <option value='Z-A'>Z-A</option>
-                <option value='+attk'>+attk</option>
-                <option value='-attk'>-attk</option>
-                <option value='+hp'>+hp</option>
-                <option value='-hp'>-hp</option>
+                <option value='+attk'>+ATTK</option>
+                <option value='-attk'>-ATTK</option>
+                <option value='+hp'>+HP</option>
+                <option value='-hp'>-HP</option>
             </select>
 
             <select

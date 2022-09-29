@@ -99,28 +99,28 @@ const rootReducer = (state = initialState, action) => {
                     return 0;
                 })
             }
-            if(sortBy === "+ATTK"){
+            if(sortBy === "+attk"){
                 filtered.sort((a,b) => {
                     if(a.attk < b.attk) return 1
                     if(a.attk > b.attk) return -1
                     return 0
                 })
             }
-            if(sortBy === "-ATTK"){
+            if(sortBy === "-attk"){
                 filtered.sort((a,b) => {
                     if(a.attk > b.attk) return 1
                     if(a.attk < b.attk) return -1
                     return 0
                 })
             }
-            if(sortBy === '+HP'){
+            if(sortBy === '+hp'){
                 filtered.sort((a,b) => {
                     if(a.hp < b.hp) return 1
                     if(a.hp > b.hp) return -1
                     return 0 
                 })
             }
-            if(sortBy === '-HP'){
+            if(sortBy === '-hp'){
                 filtered.sort((a,b) => {
                     if(a.hp > b.hp) return 1
                     if(a.hp < b.hp) return -1
