@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Navbar3 = ({ user }) => {
   const logout = () => {
-    window.open("/auth/logout", "_self");
+    window.open("https://pokemon-pi-ignacio.herokuapp.com/auth/logout", "_self");
   };
   return (
     <div className="navbar">
