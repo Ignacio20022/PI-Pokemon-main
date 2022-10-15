@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Router, Switch } from 'react-router-dom'
 import Home from './components/Home/Home.jsx'
 import Landing from './components/Landing/Landing.jsx'
@@ -12,8 +12,8 @@ import EditPokemon from './components/EditPokemon/EditPokemon.jsx'
 import Navbar3 from './components/Navbar3.jsx';
 import Login from './components/Login.jsx';
 
-function App() {
 
+function App() {
     const [user, setUser] = useState(null);
 
     useEffect(() => {

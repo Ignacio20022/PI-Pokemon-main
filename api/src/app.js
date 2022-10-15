@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const passport = require("passport");
 const cookieSession = require("cookie-session");
+const session = require("express-session");
 const cors = require("cors");
 
 require('./db.js');

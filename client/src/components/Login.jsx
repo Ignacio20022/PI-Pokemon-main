@@ -1,6 +1,3 @@
-import Google from "../img/google.png";
-import Facebook from "../img/facebook.png";
-import Github from "../img/github.png";
 
 const Login = () => {
   const google = () => {
@@ -21,15 +18,15 @@ const Login = () => {
       <div className="wrapper">
         <div className="left">
           <div className="loginButton google" onClick={google}>
-            <img src={Google} alt="" className="icon" />
+            {/* <img src={Google} alt="" className="icon" /> */}
             Google
           </div>
           <div className="loginButton facebook" onClick={facebook}>
-            <img src={Facebook} alt="" className="icon" />
+            {/* <img src={Facebook} alt="" className="icon" /> */}
             Facebook
           </div>
           <div className="loginButton github" onClick={github}>
-            <img src={Github} alt="" className="icon" />
+            {/* <img src={Github} alt="" className="icon" /> */}
             Github
           </div>
         </div>
