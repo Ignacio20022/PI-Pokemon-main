@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Router, Switch } from 'react-router-dom'
 import Home from './components/Home/Home.jsx'
 import Landing from './components/Landing/Landing.jsx'
 import PokemonDetails from './components/PokemonDetails/PokemonDetails.jsx'
@@ -9,8 +9,37 @@ import NotFound from './components/NotFound/NotFound.jsx';
 import CreatePokemon from './components/CreatePokemon/CreatePokemon.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import EditPokemon from './components/EditPokemon/EditPokemon.jsx'
+import Navbar3 from './components/Navbar3.jsx';
 
 function App() {
+
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+      const getUser = () => {
+        fetch("http://localhost:3001/auth/login/success", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+        })
+          .then((response) => {
+            if (response.status === 200) return response.json();
+            throw new Error("authentication has been failed!");
+          })
+          .then((resObject) => {
+              console.log(resObject);
+            setUser(resObject.user);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      getUser();
+    }, []);
 
     return (
         <div className="App">
@@ -37,6 +66,9 @@ function App() {
                 <Route exact path='/pokemon/delete/:id'>
                     <Navbar/>
                 </Route>
+                <Router exact path='/pokemon/log'>
+                    <Navbar3 user={user} />
+                </Router>
                 <Route path='*'>
                     <Navbar/>
                     <NotFound />

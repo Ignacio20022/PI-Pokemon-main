@@ -3,28 +3,39 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const passport = require("passport");
+const cookieSession = require("cookie-session");
+const cors = require("cors");
 
 require('./db.js');
+require("./passport");
 
 const server = express();
 
 server.name = 'API';
 
-server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
-server.use(bodyParser.json({ limit: '50mb' }));
-server.use(cookieParser());
-server.use(morgan('dev'));
-server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});
+server.use(
+  cookieSession({
+    name: "session",
+    keys: ["secretcode"],
+    maxAge: 24 * 60 * 60 * 100,
+  })
+);
+server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
+server.use(bodyParser.json({ limit: "50mb" }));
+server.use(morgan("dev"));
+// server.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+//   next();
+// });
 
-// app.use(express.static(path.join(__dirname, "./frontend/build")))
 
-// app.get(*
+// server.use(express.static(path.join(__dirname, "./frontend/build")))
+
+// server.get(*
 //     function
 //     res . sendFi1e(
 //     path.join( dirname,
@@ -34,6 +45,27 @@ server.use((req, res, next) => {
 //     " . /frontend/build/index. html "
 //     res . status(56ô) . send(err);
 //     D;
+
+server.use(cookieParser("secretcode"));
+server.use(passport.initialize());
+server.use(passport.session());
+server.use(
+  cors({
+    origin: "*", // <-- location of the react server were connecting to
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+server.use(
+  session({
+    secret: "secretcode",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+server.use(cookieParser("secretcode"));
+server.use(passport.initialize())
+server.use(passport.session())
 
 server.use('/', routes);
 
