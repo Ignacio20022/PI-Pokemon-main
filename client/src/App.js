@@ -10,6 +10,7 @@ import CreatePokemon from './components/CreatePokemon/CreatePokemon.jsx';
 import Navbar from './components/Navbar/Navbar.jsx';
 import EditPokemon from './components/EditPokemon/EditPokemon.jsx'
 import Navbar3 from './components/Navbar3.jsx';
+import Login from './components/Login.jsx';
 
 function App() {
 
@@ -45,6 +46,8 @@ function App() {
         <div className="App">
         <BrowserRouter>
             <Switch>
+                  <Navbar3 user={user} />
+
                 <Route exact path='/'>
                     <Landing />
                 </Route>
@@ -67,7 +70,9 @@ function App() {
                     <Navbar/>
                 </Route>
                 <Router exact path='/pokemon/log'>
-                    <Navbar3 user={user} />
+                </Router>
+                <Router exact path='/pokemon/login'>
+                    <Login/>
                 </Router>
                 <Route path='*'>
                     <Navbar/>
