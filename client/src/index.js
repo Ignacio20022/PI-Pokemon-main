@@ -11,7 +11,7 @@ import dotenv from 'dotenv'
 import axios from 'axios';
 dotenv.config()
 
-axios.defaults.baseURL = "https://pokemon-pi-ignacio.herokuapp.com/"
+axios.defaults.baseURL = "https://pokemon-pi-ignacio.herokuapp.com"
 
 ReactDOM.render(
   <React.StrictMode>
